@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'frontend-controleGastos'`, () => {
+  it(`should have as title 'AlgamoneyUI'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('frontend-controleGastos');
+    expect(app.title).toEqual('AlgamoneyUI');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('frontend-controleGastos app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('AlgamoneyUI app is running!');
   });
 });

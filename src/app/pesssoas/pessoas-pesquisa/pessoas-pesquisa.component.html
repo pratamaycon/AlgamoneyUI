@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1>Pessoas</h1>
+    </div>
+
+    <div class="ui-g-12 ui-fluid">
+      <label>Descrição</label>
+      <input type="text" pInputText />
+    </div>
+
+    <div class="ui-g-12">
+      <button pButton type="button" label="Pesquisar"></button>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [rows]="5" [value]="pessoas" [columns]="cols" [responsive]="true"
+        [paginator]="true" [resizableColumns]="true">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns" pResizableColumn>
+                  {{col.header}}
+              </th>
+              <th>Ações</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-pessoa let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns" class="ui-resizable-column">
+                <span class="ui-column-title">{{ col.header }}</span>
+                <span *ngIf="col.field === 'ativo'; else colunaSemAtivo">
+                  <span  *ngIf="pessoa.ativo === true; else inativo">
+                    <a class="status" href="javascript:;" pTooltip="Ativar" tooltipPosition="top">Ativo</a>
+                  </span>
+                  <ng-template #inativo>
+                    <a class="status" href="javascript:;" pTooltip="Desativar" tooltipPosition="top" >Inativo</a>
+                  </ng-template>
+                </span>
+                <ng-template #colunaSemAtivo>
+                  {{ rowData[ col.field ] }}
+                </ng-template>
+              </td>
+              <td class="col-center">
+                <a icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" pButton></a>
+                <a icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top" pButton></a>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <button pButton type="button" label="Novo Pessoa"></button>
+    </div>
+
+  </div>
+</div>

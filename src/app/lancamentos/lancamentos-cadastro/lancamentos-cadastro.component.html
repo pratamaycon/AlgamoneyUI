@@ -1,0 +1,83 @@
+
+
+<div class="container">
+  <form [formGroup]="formulario" novalidate (ngSubmit)="enviarFormulario()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Novo Lançamento</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <p-selectButton formControlName="cardType" [options]="tipos"
+        [(ngModel)]="selectedType" ></p-selectButton>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy"
+          [inline]="false"
+          [readonlyInput]="false"
+          [showIcon]="true">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>{{ selectedType === 'DESPESA' ? 'Recebimento' : 'Pagamento' }}</label>
+        <p-calendar dateFormat="dd/mm/yy"
+        [inline]="false"
+        [readonlyInput]="false"
+        [showIcon]="true">
+      </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Descrição</label>
+        <input pInputText type="text"
+        formControlName="descricao"
+        placeholder="Descrição"
+        >
+        <div *ngIf="!formulario.get('descricao').valid && formulario.get('descricao').touched ">
+          <p-message severity="error" text="Campo Obrigatório"></p-message>
+        </div>
+        <div *ngIf="formulario.get('descricao').hasError('minlength') && formulario.dirty">
+          <p-message severity="error" text="Mínimo de {{ formulario.get('descricao').errors.minlength.requiredLength }} caracteres.
+          Você digitou apenas {{ formulario.get('descricao').errors.minlength.actualLength }}"></p-message>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Valor</label>
+        <input currencyMask pInputText type="text" placeholder="0,00"
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+        formControlName="valor"
+        [(ngModel)]="value">
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Categoria</label>
+        <p-dropdown [options]="categorias" placeholder="Selecione" [filter]="true" >
+
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Pessoa</label>
+        <p-dropdown [options]="pessoas" placeholder="Selecione" [filter]="true">
+
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Observação</label>
+        <textarea pInputTextarea rows="3"></textarea>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info"></button>
+        <button pButton type="button" label="Voltar" class="ui-button-info"></button>
+      </div>
+
+    </div>
+  </form>
+</div>
