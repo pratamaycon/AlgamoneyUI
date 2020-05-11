@@ -7,17 +7,34 @@
 
       <div class="ui-g-12 ui-md-12 ui-fluid">
         <label>Nome</label>
-        <input pInputText type="text">
+        <input pInputText type="text"
+        formControlName="nome">
+        <app-message [control]="formulario.get('nome')" error="required" text="Campo Obrigatório">
+        </app-message>
+        <app-message [control]="formulario.get('nome')" error="minlength"
+        text="Mínimo de {{
+          formulario.get('nome').errors?.minlength?.requiredLength
+        }} caracteres.
+        Você digitou apenas {{
+          formulario.get('nome').errors?.minlength?.actualLength
+        }} caracteres.">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Logradouro</label>
-        <input pInputText type="text">
+        <input pInputText type="text"
+        formControlName="logradouro">
+        <app-message [control]="formulario.get('logradouro')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Número</label>
-        <input pInputText type="text">
+        <input pInputText type="text"
+        formControlName="numero">
+        <app-message [control]="formulario.get('numero')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-4 ui-fluid">
@@ -27,31 +44,39 @@
 
       <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>Bairro</label>
-        <input pInputText type="text">
+        <input pInputText type="text"
+        formControlName="bairro">
+        <app-message [control]="formulario.get('bairro')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>CEP</label>
-        <p-inputMask mask="99999-999"></p-inputMask>
-      </div>
-
-      <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>Complemento</label>
-        <input pInputText type="text">
+        <p-inputMask mask="99999-999"
+        formControlName="cep">
+          <app-message [control]="formulario.get('cep')" error="required" text="Campo Obrigatório">
+          </app-message>
+        </p-inputMask>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Cidade</label>
-        <input pInputText type="text">
+        <input pInputText type="text"
+        formControlName="cidade">
+        <app-message [control]="formulario.get('cidade')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Estado</label>
-        <input pInputText type="text">
+        <input pInputText type="text"
+        formControlName="estado">
+        <app-message [control]="formulario.get('estado')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12">
-        <button pButton type="submit" label="Salvar"></button>
+        <button [disabled]="formulario.invalid ? true: false" pButton type="submit" label="Salvar"></button>
         <button pButton type="button" label="Novo" class="ui-button-info"></button>
         <button pButton type="button" label="Voltar" class="ui-button-info"></button>
       </div>

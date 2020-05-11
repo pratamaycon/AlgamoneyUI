@@ -11,16 +11,18 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
-import { MessagesModule } from 'primeng/messages';
-import { MessageModule } from 'primeng/message';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
+import { SharedModule } from './../shared/message.module';
+
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentosCadastroComponent } from './lancamentos-cadastro/lancamentos-cadastro.component';
+import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
+
 
 @NgModule({
-  declarations: [LancamentosPesquisaComponent, LancamentosCadastroComponent],
+  declarations: [LancamentosPesquisaComponent, LancamentosCadastroComponent, LancamentosGridComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -35,8 +37,7 @@ import { LancamentosCadastroComponent } from './lancamentos-cadastro/lancamentos
     SelectButtonModule,
     DropdownModule,
     CurrencyMaskModule,
-    MessagesModule,
-    MessageModule
+    SharedModule
   ],
   exports: [LancamentosPesquisaComponent, LancamentosCadastroComponent],
 })

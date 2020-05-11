@@ -2,7 +2,7 @@ import { PessoasCadastroComponent } from './pesssoas/pessoas-cadastro/pessoas-ca
 import { LancamentosCadastroComponent } from './lancamentos/lancamentos-cadastro/lancamentos-cadastro.component';
 import { Routes } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './core/home/home.component';
 import { PessoasPesquisaComponent } from './pesssoas/pessoas-pesquisa/pessoas-pesquisa.component';
 import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
 

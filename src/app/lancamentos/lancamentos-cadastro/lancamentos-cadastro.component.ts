@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api/selectitem';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Message } from 'primeng/api/message';
-
 
 @Component({
   selector: 'app-lancamentos-cadastro',
@@ -12,13 +10,15 @@ import { Message } from 'primeng/api/message';
 export class LancamentosCadastroComponent implements OnInit {
 
   public formulario: FormGroup = new FormGroup({
-    descricao: new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(30)]),
-    valor: new FormControl(null),
+    vencimento: new FormControl(null, [Validators.required]),
+    descricao: new FormControl(null, [Validators.required, Validators.minLength(5)]),
+    valor: new FormControl(null, [Validators.required]),
+    categoria: new FormControl(null, [Validators.required]),
+    pessoa: new FormControl(null, [Validators.required]),
     cardType: new FormControl(null)
   });
 
   public value: number;
-  public msgs: Message[] = [];
   public tipos: SelectItem[];
   public categorias: SelectItem[];
   public pessoas: SelectItem[];
@@ -34,10 +34,6 @@ export class LancamentosCadastroComponent implements OnInit {
       { label: 'Despesa', value: 'DESPESA' },
     ];
 
-    this.msgs = [
-      {severity: 'error', summary: 'Success Message', detail: 'Order submitted'}
-    ];
-
     this.categorias = [
       { label: 'Alimentação', value: 1 },
       { label: 'Transporte', value: 2 },
@@ -48,9 +44,6 @@ export class LancamentosCadastroComponent implements OnInit {
       { label: 'Sebastião Souza', value: 9 },
       { label: 'Maria Abadia', value: 3 },
     ];
-
-    console.log(this.formulario.get('descricao').errors.minlength);
-
   }
 
   enviarFormulario() {

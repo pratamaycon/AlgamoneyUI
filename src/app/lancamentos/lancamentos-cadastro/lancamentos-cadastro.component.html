@@ -14,11 +14,13 @@
 
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy"
+        <p-calendar dateFormat="dd/mm/yy" formControlName="vencimento"
           [inline]="false"
           [readonlyInput]="false"
           [showIcon]="true">
         </p-calendar>
+        <app-message [control]="formulario.get('vencimento')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-6 ui-md-3 ui-fluid">
@@ -34,15 +36,17 @@
         <label>Descrição</label>
         <input pInputText type="text"
         formControlName="descricao"
-        placeholder="Descrição"
-        >
-        <div *ngIf="!formulario.get('descricao').valid && formulario.get('descricao').touched ">
-          <p-message severity="error" text="Campo Obrigatório"></p-message>
-        </div>
-        <div *ngIf="formulario.get('descricao').hasError('minlength') && formulario.dirty">
-          <p-message severity="error" text="Mínimo de {{ formulario.get('descricao').errors.minlength.requiredLength }} caracteres.
-          Você digitou apenas {{ formulario.get('descricao').errors.minlength.actualLength }}"></p-message>
-        </div>
+        placeholder="Campo de Descrição">
+        <app-message [control]="formulario.get('descricao')" error="required" text="Campo Obrigatório">
+        </app-message>
+        <app-message [control]="formulario.get('descricao')" error="minlength"
+        text="Mínimo de {{
+          formulario.get('descricao').errors?.minlength?.requiredLength
+        }} caracteres.
+        Você digitou apenas {{
+          formulario.get('descricao').errors?.minlength?.actualLength
+        }} caracteres.">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-3 ui-fluid">
@@ -51,20 +55,24 @@
         [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
         formControlName="valor"
         [(ngModel)]="value">
+        <app-message [control]="formulario.get('valor')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Categoria</label>
-        <p-dropdown [options]="categorias" placeholder="Selecione" [filter]="true" >
-
+        <p-dropdown formControlName="categoria" [options]="categorias" placeholder="Selecione" [filter]="true" >
         </p-dropdown>
+        <app-message [control]="formulario.get('valor')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pessoa</label>
-        <p-dropdown [options]="pessoas" placeholder="Selecione" [filter]="true">
-
+        <p-dropdown formControlName="pessoa" [options]="pessoas" placeholder="Selecione" [filter]="true">
         </p-dropdown>
+        <app-message [control]="formulario.get('pessoa')" error="required" text="Campo Obrigatório">
+        </app-message>
       </div>
 
       <div class="ui-g-12 ui-fluid">
@@ -73,7 +81,7 @@
       </div>
 
       <div class="ui-g-12">
-        <button pButton type="submit" label="Salvar"></button>
+        <button [disabled]="formulario.invalid ? true: false" pButton type="submit" label="Salvar"></button>
         <button pButton type="button" label="Novo" class="ui-button-info"></button>
         <button pButton type="button" label="Voltar" class="ui-button-info"></button>
       </div>
