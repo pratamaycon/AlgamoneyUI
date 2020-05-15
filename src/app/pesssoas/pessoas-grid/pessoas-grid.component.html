@@ -1,10 +1,9 @@
 <p-table
-  [rows]="5"
-  [value]="pessoas"
-  [columns]="cols"
-  [responsive]="true"
-  [paginator]="true"
-  [resizableColumns]="true"
+  [value]="pessoas" [columns]="cols"
+  [responsive]="true" [resizableColumns]="true"
+  [rows]="filtro.itensPorPagina" [paginator]="true"
+  [lazy]="true" [totalRecords]="totalRegistros"
+  (onLazyLoad)="aoMudarPagina($event)"
 >
   <ng-template pTemplate="colgroup" let-columns>
     <colgroup>
@@ -28,7 +27,7 @@
             <a
               class="status"
               href="javascript:;"
-              pTooltip="Ativar"
+              pTooltip="Desativar"
               tooltipPosition="top"
               >Ativo</a
             >
@@ -37,13 +36,19 @@
             <a
               class="status"
               href="javascript:;"
-              pTooltip="Desativar"
+              pTooltip="Ativar"
               tooltipPosition="top"
               >Inativo</a
             >
           </ng-template>
         </span>
         <ng-template #colunaSemAtivo>
+          <span *ngIf="col.field === 'cidade'">
+            {{ pessoa.endereco.cidade }}
+          </span>
+          <span *ngIf="col.field === 'estado'">
+            {{ pessoa.endereco.estado }}
+          </span>
           {{ rowData[col.field] }}
         </ng-template>
       </td>
@@ -61,6 +66,13 @@
           pButton
         ></a>
       </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+        <td [attr.colspan]="columns.length + 1">
+            <strong class="semPessoas"> Nenhuma Pessoa Encontrada </strong>
+        </td>
     </tr>
   </ng-template>
 </p-table>

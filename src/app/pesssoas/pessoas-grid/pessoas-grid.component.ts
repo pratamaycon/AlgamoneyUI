@@ -1,5 +1,7 @@
-import { PessoaDTO } from './../Pessoa.dto';
-import { Component, OnInit, Input } from '@angular/core';
+import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
+import { PessoaFiltro } from './../PessoaFiltro';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { LancamentoFilter } from 'src/app/lancamentos/LancamentoFilter';
 
 @Component({
   selector: 'app-pessoas-grid',
@@ -8,12 +10,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PessoasGridComponent implements OnInit {
 
-  @Input() public pessoas: Array<PessoaDTO>;
+  @Input() public pessoas: Array<any>;
   @Input() public cols: Array<any>;
+  @Input() public filtro: PessoaFiltro;
+  @Input() public totalRegistros: number;
+
+  @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  aoMudarPagina(event: LazyLoadEvent): void {
+    this.lazyLoad.emit(event);
   }
 
 }

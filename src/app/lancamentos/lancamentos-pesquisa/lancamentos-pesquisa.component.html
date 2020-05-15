@@ -1,30 +1,50 @@
 <div class="container">
   <div class="ui-g">
-    <div class="ui-g-12">
-      <h1>Lançamentos</h1>
-    </div>
+    <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="pesquisar()">
+      <div class="ui-g-12">
+        <h1>Lançamentos</h1>
+      </div>
 
-    <div class="ui-g-12 ui-fluid">
-      <label>Descrição</label>
-      <input type="text" pInputText />
-    </div>
+      <div class="ui-g-12 ui-fluid">
+        <label>Descrição</label>
+        <input type="text" pInputText
+        formControlName="descricao" [(ngModel)]="filtro.descricao" />
+      </div>
 
-    <div class="ui-g-12">
-      <label id="labelEmcimaInput">Vencimento</label>
-      <input type="text" pInputText class="tamanhoInput" />
+      <div class="ui-g-12">
+        <label id="labelEmcimaInput">Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy" formControlName="vencimentoInicio"
+        [inline]="false" [(ngModel)]="filtro.dataVencimentoInicio"
+        [readonlyInput]="false"
+        [showIcon]="true">
+        </p-calendar>
 
-      <label style="padding: 0 10px;">Até</label>
-      <input type="text" pInputText class="tamanhoInput" />
-    </div>
+        <label style="padding: 0 10px;">Até</label>
+        <p-calendar dateFormat="dd/mm/yy" formControlName="vencimentoFim"
+        [inline]="false" [(ngModel)]="filtro.dataVencimentoFim"
+        [readonlyInput]="false"
+        [showIcon]="true">
+        </p-calendar>
+      </div>
 
-    <div class="ui-g-12">
-      <button pButton type="button" label="Pesquisar"></button>
-    </div>
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </form>
   </div>
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <app-lancamentos-grid [cols]="cols" [lancamentos]="lancamentos" ></app-lancamentos-grid>
+      <app-lancamentos-grid
+        [cols]="cols"
+        [lancamentos]="lancamentos"
+        [filtro]="filtro"
+        [totalRegistros]="totalRegistros"
+        (lazyLoad)="aoMudarPagina($event)"
+        (lanc)="confirmarExclusao($event)"
+        (template)=templateTable($event)
+        [(tabela)]="tabela"
+      ></app-lancamentos-grid>
     </div>
   </div>
 
