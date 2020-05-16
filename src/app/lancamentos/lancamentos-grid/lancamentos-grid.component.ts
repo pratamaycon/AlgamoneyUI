@@ -1,3 +1,4 @@
+import { LancamentoDTO } from './../lancamento.dto';
 import { Table } from 'primeng/table/table';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 import { LancamentoFilter } from './../LancamentoFilter';
@@ -35,7 +36,7 @@ export class LancamentosGridComponent implements OnInit, OnChanges {
     this.lazyLoad.emit(event);
   }
 
-  excluir(lancamento: any) {
+  excluir(lancamento: LancamentoDTO) {
     this.lanc.emit(lancamento);
     this.template.emit(this.grid);
   }

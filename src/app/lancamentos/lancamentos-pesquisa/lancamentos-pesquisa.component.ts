@@ -1,14 +1,15 @@
-import { ErrorHandlerService } from './../../core/error-handler.service';
-import { LancamentoDTO } from './../lancamento.dto';
-import { LancamentoFilter } from './../LancamentoFilter';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { LancamentoService } from '../service/lancamento.service';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 import { Table } from 'primeng/table/table';
 import { ToastyService, ToastOptions } from 'ng2-toasty';
 import { ConfirmationService } from 'primeng/api';
+
+import { LancamentoService } from '../service/lancamento.service';
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { LancamentoDTO } from './../lancamento.dto';
+import { LancamentoFilter } from './../LancamentoFilter';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -16,7 +17,6 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./lancamentos-pesquisa.component.scss'],
 })
 export class LancamentosPesquisaComponent implements OnInit {
-
   public cols: any[];
   public lancamentos: Array<any> = [];
 
@@ -29,14 +29,14 @@ export class LancamentosPesquisaComponent implements OnInit {
     vencimentoFim: new FormControl(null),
   });
 
-  tabela: Table;
+  public tabela: Table;
 
   constructor(
     private lancamentoService: LancamentoService,
     private toastyService: ToastyService,
     private confirmationService: ConfirmationService,
     private handlerService: ErrorHandlerService
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.cols = [
@@ -44,40 +44,39 @@ export class LancamentosPesquisaComponent implements OnInit {
       { field: 'descricao', header: 'Descrição', width: '20%' },
       { field: 'dataVencimento', header: 'Vencimento', width: '18%' },
       { field: 'dataPagamento', header: 'Pagamento', width: '15%' },
-      { field: 'valor', header: 'Valor', width: '15%' }
+      { field: 'valor', header: 'Valor', width: '15%' },
     ];
   }
 
-  pesquisar(pagina: number = 0): void {
+  public pesquisar(pagina: number = 0): void {
     this.filtro.pagina = pagina;
 
-    this.lancamentoService.pesquisar(this.filtro)
-    .subscribe( (resultado: any) => {
-      this.totalRegistros = resultado.total;
-      this.lancamentos = resultado.lancamentos;
-    },
-      (error: any) => { this.handlerService.handle(error); }
+    this.lancamentoService.pesquisar(this.filtro).subscribe(
+      (resultado: any) => {
+        this.totalRegistros = resultado.total;
+        this.lancamentos = resultado.lancamentos;
+      },
+      (error: any) => {
+        this.handlerService.handle(error);
+      }
     );
   }
 
-   aoMudarPagina(event: LazyLoadEvent): void {
+  public aoMudarPagina(event: LazyLoadEvent): void {
     const pagina = event.first / event.rows;
     this.pesquisar(pagina);
   }
 
-  excluir(lancamento: LancamentoDTO) {
+  public excluir(lancamento: LancamentoDTO) {
     const toastOptions: ToastOptions = {
       title: 'Exclusão',
       msg: 'Lançamento excluído com sucesso',
       showClose: true,
       timeout: 1500,
-      theme: 'bootstrap'
+      theme: 'bootstrap',
     };
-    this.lancamentoService.excluir(lancamento.codigo)
-      .subscribe( ( _ ) => {
-
-        // console.log(this.tabela.first);
-
+    this.lancamentoService.excluir(lancamento.codigo).subscribe(
+      (_) => {
         if (this.tabela.first === 0) {
           this.pesquisar();
         } else {
@@ -86,20 +85,22 @@ export class LancamentosPesquisaComponent implements OnInit {
 
         this.toastyService.success(toastOptions);
       },
-        (error: any) => { this.handlerService.handle(error); }
-      );
+      (error: any) => {
+        this.handlerService.handle(error);
+      }
+    );
   }
 
-  confirmarExclusao(lancamento: LancamentoDTO) {
+  public confirmarExclusao(lancamento: LancamentoDTO) {
     this.confirmationService.confirm({
       message: 'Tem Certeza que deseja Excluir ?',
       accept: () => {
         this.excluir(lancamento);
-      }
+      },
     });
   }
 
-  templateTable(table)  {
+  public bidingTable(table) {
     this.tabela = table;
   }
 }

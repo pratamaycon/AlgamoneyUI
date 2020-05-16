@@ -1,9 +1,14 @@
 <p-table
-  [value]="pessoas" [columns]="cols"
-  [responsive]="true" [resizableColumns]="true"
-  [rows]="filtro.itensPorPagina" [paginator]="true"
-  [lazy]="true" [totalRecords]="totalRegistros"
+  [value]="pessoas"
+  [columns]="cols"
+  [responsive]="true"
+  [resizableColumns]="true"
+  [rows]="filtro.itensPorPagina"
+  [paginator]="true"
+  [lazy]="true"
+  [totalRecords]="totalRegistros"
   (onLazyLoad)="aoMudarPagina($event)"
+  #tabela
 >
   <ng-template pTemplate="colgroup" let-columns>
     <colgroup>
@@ -23,7 +28,7 @@
       <td *ngFor="let col of columns" class="ui-resizable-column">
         <span class="ui-column-title">{{ col.header }}</span>
         <span *ngIf="col.field === 'ativo'; else colunaSemAtivo">
-          <span *ngIf="pessoa.ativo === true; else inativo">
+          <span *ngIf="pessoa.ativo === true; else inativo" (click)="ativar(pessoa)">
             <a
               class="status"
               href="javascript:;"
@@ -44,10 +49,10 @@
         </span>
         <ng-template #colunaSemAtivo>
           <span *ngIf="col.field === 'cidade'">
-            {{ pessoa.endereco.cidade }}
+            {{ pessoa?.endereco.cidade }}
           </span>
           <span *ngIf="col.field === 'estado'">
-            {{ pessoa.endereco.estado }}
+            {{ pessoa?.endereco.estado }}
           </span>
           {{ rowData[col.field] }}
         </ng-template>
@@ -63,16 +68,16 @@
           icon="pi pi-trash"
           pTooltip="Excluir"
           tooltipPosition="top"
-          pButton
+          pButton (click)="excluir(pessoa)"
         ></a>
       </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage" let-columns>
     <tr>
-        <td [attr.colspan]="columns.length + 1">
-            <strong class="semPessoas"> Nenhuma Pessoa Encontrada </strong>
-        </td>
+      <td [attr.colspan]="columns.length + 1">
+        <strong class="semPessoas"> Nenhuma Pessoa Encontrada </strong>
+      </td>
     </tr>
   </ng-template>
 </p-table>

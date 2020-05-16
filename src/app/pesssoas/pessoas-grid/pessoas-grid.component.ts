@@ -1,23 +1,35 @@
-import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
-import { PessoaFiltro } from './../PessoaFiltro';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { LancamentoFilter } from 'src/app/lancamentos/LancamentoFilter';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Output, EventEmitter, ViewChild } from '@angular/core';
 
+import { Table } from 'primeng/table/table';
+import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
+
+import { PessoaFiltro } from './../PessoaFiltro';
+import { PessoaDTO } from './../pessoa.dto';
 @Component({
   selector: 'app-pessoas-grid',
   templateUrl: './pessoas-grid.component.html',
   styleUrls: ['./pessoas-grid.component.scss']
 })
-export class PessoasGridComponent implements OnInit {
+export class PessoasGridComponent implements OnInit, OnChanges {
 
-  @Input() public pessoas: Array<any>;
-  @Input() public cols: Array<any>;
-  @Input() public filtro: PessoaFiltro;
-  @Input() public totalRegistros: number;
+  @Input()  pessoas: Array<any>;
+  @Input()  cols: Array<any>;
+  @Input()  filtro: PessoaFiltro;
+  @Input()  totalRegistros: number;
+  @Input()  tabela: Table;
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
+  @Output() ps: EventEmitter<any> = new EventEmitter();
+  @Output() template: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('tabela', { static: false }) grid;
 
   constructor() { }
+
+  ngOnChanges() {
+    this.tabela = this.grid;
+  }
 
   ngOnInit(): void {
   }
@@ -26,4 +38,12 @@ export class PessoasGridComponent implements OnInit {
     this.lazyLoad.emit(event);
   }
 
+  excluir(pessoa: PessoaDTO) {
+    this.ps.emit(pessoa);
+    this.template.emit(this.grid);
+  }
+
+  ativar(pessoa: PessoaDTO) {
+    console.log(pessoa);
+  }
 }

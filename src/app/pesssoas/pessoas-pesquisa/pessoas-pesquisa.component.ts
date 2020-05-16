@@ -1,9 +1,16 @@
-import { PessoaFiltro } from './../PessoaFiltro';
-import { PessoaService } from './../services/pessoa.service';
+import { ErrorHandlerService } from './../../core/error-handler.service';
 
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+
+import { PessoaDTO } from './../pessoa.dto';
+import { PessoaFiltro } from './../PessoaFiltro';
+import { PessoaService } from './../services/pessoa.service';
+
 import { LazyLoadEvent } from 'primeng/api/public_api';
+import { ConfirmationService } from 'primeng/api';
+import { ToastOptions, ToastyService } from 'ng2-toasty';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -22,11 +29,16 @@ export class PessoasPesquisaComponent implements OnInit {
     nome: new FormControl(null),
   });
 
-  constructor(private pessoasService: PessoaService) {}
+  public tabela: Table;
+
+  constructor(
+    private pessoasService: PessoaService,
+    private confirmationService: ConfirmationService,
+    private toastyService: ToastyService,
+    private handlerService: ErrorHandlerService
+  ) {}
 
   ngOnInit(): void {
-    this.pesquisar();
-
     this.cols = [
       { field: 'nome', header: 'Nome', width: '30%' },
       { field: 'cidade', header: 'Cidade', width: '20%' },
@@ -43,7 +55,7 @@ export class PessoasPesquisaComponent implements OnInit {
         this.totalRegistros = resultado.total;
         this.pessoas = resultado.pessoas;
       },
-      (error: any) => console.log(error)
+      (error: any) => this.handlerService.handle(error)
     );
   }
 
@@ -52,4 +64,39 @@ export class PessoasPesquisaComponent implements OnInit {
     this.pesquisar(pagina);
   }
 
+  public excluir(pessoa: PessoaDTO) {
+    const toastOptions: ToastOptions = {
+      title: 'Exclusão',
+      msg: 'Pessoa excluída com sucesso',
+      showClose: true,
+      timeout: 1500,
+      theme: 'bootstrap',
+    };
+    this.pessoasService.excluir(pessoa.codigo).subscribe(
+      (_) => {
+        if (this.tabela.first === 0) {
+          this.pesquisar();
+        } else {
+          this.tabela.reset();
+        }
+      },
+      (error: any) => {
+        this.handlerService.handle(error);
+      }
+    );
+    this.toastyService.success(toastOptions);
+  }
+
+  public confirmarExclusao(pessoa: PessoaDTO) {
+    this.confirmationService.confirm({
+      message: 'Tem Certeza que deseja Excluir ?',
+      accept: () => {
+        this.excluir(pessoa);
+      },
+    });
+  }
+
+  public bidingTable(table) {
+    this.tabela = table;
+  }
 }

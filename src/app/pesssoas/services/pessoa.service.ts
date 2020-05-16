@@ -47,6 +47,16 @@ export class PessoaService {
     );
   }
 
+  public excluir(codigo: number): Observable<any> {
+    const headers = this.setHeaders();
+    return this.http.delete(`${this.pessoasUrl}/${codigo}`, { headers });
+  }
+
+  public atualizarAtivo(codigo: number, pessoaAtiva: boolean): Observable<any> {
+    const headers = this.setHeaders();
+    return this.http.put(`${this.pessoasUrl}/${codigo}/${pessoaAtiva}`, { headers });
+  }
+
   private setHeaders(): HttpHeaders {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')

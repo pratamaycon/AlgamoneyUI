@@ -1,58 +1,84 @@
-      <p-table [columns]="cols" [resizableColumns]="true"
-      [value]="lancamentos" [responsive]="true"
-      emptymessage="Nenhum Lancamento Encontrado"
-      [paginator]="true" [rows]="filtro.itensPorPagina"
-      [lazy]="true" [totalRecords]="totalRegistros"
-      (onLazyLoad)="aoMudarPagina($event)" #tabela>
-        <ng-template pTemplate="colgroup" let-columns>
-          <colgroup>
-            <col *ngFor="let col of columns" [style.width]="col.width">
-          </colgroup>
+<p-table
+  [columns]="cols"
+  [resizableColumns]="true"
+  [value]="lancamentos"
+  [responsive]="true"
+  emptymessage="Nenhum Lancamento Encontrado"
+  [paginator]="true"
+  [rows]="filtro.itensPorPagina"
+  [lazy]="true"
+  [totalRecords]="totalRegistros"
+  (onLazyLoad)="aoMudarPagina($event)"
+  #tabela
+>
+  <ng-template pTemplate="colgroup" let-columns>
+    <colgroup>
+      <col *ngFor="let col of columns" [style.width]="col.width" />
+    </colgroup>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" pResizableColumn>
+        {{ col.header }}
+      </th>
+      <th>Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-lanc let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns" class="ui-resizable-column">
+        <span class="ui-column-title">{{ col.header }}</span>
+        <!-- Trava todas as alterações na coluna valor -->
+        <span *ngIf="col.field === 'valor'; else colunasSemValor">
+          <span
+            class="col-valor"
+            [style.color]="lanc.tipo === 'DESPESA' ? 'red' : 'blue'"
+          >
+            {{ lanc.valor | currency: 'BRL':true }}
+          </span>
+        </span>
+        <ng-template #colunasSemValor>
+          <!-- Trava todas as alterações nas colunas de Data -->
+          <span
+            *ngIf="
+              col.field === 'dataVencimento' || col.field === 'dataPagamento';
+              else colunasData
+            "
+          >
+            <span *ngIf="col.header === 'Vencimento'">
+              {{ lanc.dataVencimento | date: 'dd/MM/yyyy' }}
+            </span>
+            <span *ngIf="col.header === 'Pagamento'">
+              {{ lanc.datPagamento | date: 'dd/MM/yyyy' }}
+            </span>
+          </span>
+          <ng-template #colunasData>
+            {{ rowData[col.field] }}
+          </ng-template>
         </ng-template>
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <th *ngFor="let col of columns" pResizableColumn>
-                {{col.header}}
-            </th>
-            <th>Ações</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-lanc let-columns="columns">
-          <tr>
-            <td *ngFor="let col of columns" class="ui-resizable-column">
-              <span class="ui-column-title">{{ col.header }}</span>
-              <!-- Trava todas as alterações na coluna valor -->
-              <span *ngIf="col.field === 'valor'; else colunasSemValor">
-                <span class="col-valor" [style.color]="lanc.tipo === 'DESPESA' ? 'red' : 'blue'">
-                  {{ lanc.valor | currency: "BRL":true }}
-                </span>
-              </span>
-              <ng-template #colunasSemValor>
-                 <!-- Trava todas as alterações nas colunas de Data -->
-                <span *ngIf="col.field === 'dataVencimento' || col.field === 'dataPagamento'; else colunasData">
-                  <span *ngIf="col.header === 'Vencimento'">
-                    {{ lanc.dataVencimento | date:'dd/MM/yyyy' }}
-                  </span>
-                  <span *ngIf="col.header === 'Pagamento'">
-                    {{ lanc.datPagamento | date:'dd/MM/yyyy' }}
-                  </span>
-                </span>
-                <ng-template #colunasData>
-                  {{ rowData[ col.field ]  }}
-                </ng-template>
-              </ng-template>
-            </td>
-            <td class="col-center">
-              <a icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" pButton></a>
-              <button icon="pi pi-trash" (click)="excluir(lanc)" pTooltip="Excluir" tooltipPosition="top" pButton></button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage" let-columns>
-        <tr>
-            <td [attr.colspan]="columns.length + 1">
-                <strong class="semLancamentos"> Nenhum Lançamento Encontrado </strong>
-            </td>
-        </tr>
-      </ng-template>
-      </p-table>
+      </td>
+      <td class="col-center">
+        <a
+          icon="pi pi-pencil"
+          pTooltip="Editar"
+          tooltipPosition="top"
+          pButton
+        ></a>
+        <button
+          icon="pi pi-trash"
+          (click)="excluir(lanc)"
+          pTooltip="Excluir"
+          tooltipPosition="top"
+          pButton
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+      <td [attr.colspan]="columns.length + 1">
+        <strong class="semLancamentos"> Nenhum Lançamento Encontrado </strong>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -28,6 +28,9 @@
           [filtro]="filtro"
           [totalRegistros]="totalRegistros"
           (lazyLoad)="aoMudarPagina($event)"
+          (ps)="confirmarExclusao($event)"
+          (template)=bidingTable($event)
+          [(tabela)]="tabela"
         ></app-pessoas-grid>
       </div>
     </div>
