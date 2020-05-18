@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { LancamentoService } from './../service/lancamento.service';
@@ -71,8 +71,8 @@ export class LancamentosCadastroComponent implements OnInit {
     return this.lancamento;
   }
 
-  adicionar() {
-    const lancamento =  this.configurarFormulario();
+  salvar() {
+    const lancamento = this.configurarFormulario();
     this.lancamentoService.adicionar(lancamento).subscribe((_) => {
       this.toastyService.success({
         title: 'Adicionado',

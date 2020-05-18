@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { LancamentoDTO } from './../../core/lancamento.dto';
 import { LancamentoFilter } from '../LancamentoFilter';
@@ -56,13 +56,15 @@ export class LancamentoService {
           };
 
           return resultado;
-        })
+        }),
+        take(1)
       );
   }
 
   excluir(codigo: number): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { headers });
+    return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { headers })
+      .pipe(take(1));
   }
 
   adicionar(lancamento: LancamentoDTO): Observable<any> {
@@ -72,7 +74,8 @@ export class LancamentoService {
 
     return this.http.post(this.lancamentosUrl, body, { headers })
       .pipe(
-        map( (res) => res)
+        map( (res) => res),
+        take(1)
       );
   }
 

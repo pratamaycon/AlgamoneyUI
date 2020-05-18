@@ -1,3 +1,4 @@
+import { PessoaDTO } from 'src/app/core/pessoa.dto';
 import { PessoaFiltro } from './../PessoaFiltro';
 import { environment } from './../../../environments/environment';
 
@@ -56,6 +57,17 @@ export class PessoaService {
   public ativarPropriedade(codigo: number, atvo: boolean): Observable<any> {
     const headers = this.getHeaders();
     return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, atvo, { headers }).pipe(take(1));
+  }
+
+  public adicionar(pessoa: PessoaDTO): Observable<PessoaDTO> {
+    const headers = this.getHeaders();
+
+    const body = JSON.stringify(pessoa);
+
+    return this.http.post(this.pessoasUrl, body, { headers }).pipe(
+      map( (res: any) => res ),
+      take(1)
+    );
   }
 
   private getHeaders(): HttpHeaders {
