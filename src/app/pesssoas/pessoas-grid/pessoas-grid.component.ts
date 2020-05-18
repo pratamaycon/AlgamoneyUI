@@ -5,7 +5,7 @@ import { Table } from 'primeng/table/table';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 
 import { PessoaFiltro } from './../PessoaFiltro';
-import { PessoaDTO } from './../pessoa.dto';
+import { PessoaDTO } from 'src/app/core/pessoa.dto';
 @Component({
   selector: 'app-pessoas-grid',
   templateUrl: './pessoas-grid.component.html',
@@ -21,6 +21,7 @@ export class PessoasGridComponent implements OnInit, OnChanges {
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
   @Output() ps: EventEmitter<any> = new EventEmitter();
+  @Output() propriedade: EventEmitter<any> = new EventEmitter();
   @Output() template: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('tabela', { static: false }) grid;
@@ -43,7 +44,7 @@ export class PessoasGridComponent implements OnInit, OnChanges {
     this.template.emit(this.grid);
   }
 
-  ativar(pessoa: PessoaDTO) {
-    console.log(pessoa);
+  ativarPropriedade(pessoa: PessoaDTO) {
+    this.propriedade.emit(pessoa);
   }
 }

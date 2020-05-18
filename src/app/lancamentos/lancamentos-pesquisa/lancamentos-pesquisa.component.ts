@@ -8,8 +8,9 @@ import { ConfirmationService } from 'primeng/api';
 
 import { LancamentoService } from '../service/lancamento.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
-import { LancamentoDTO } from './../lancamento.dto';
+
 import { LancamentoFilter } from './../LancamentoFilter';
+import { LancamentoDTO } from 'src/app/core/lancamento.dto';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',

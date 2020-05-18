@@ -1,11 +1,13 @@
-import { LancamentoFilter } from '../LancamentoFilter';
+
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
 import { map } from 'rxjs/operators';
+
+import { LancamentoDTO } from './../../core/lancamento.dto';
+import { LancamentoFilter } from '../LancamentoFilter';
 
 import * as moment from 'moment';
 @Injectable({
@@ -20,7 +22,7 @@ export class LancamentoService {
 
   pesquisar(filtro: LancamentoFilter): Observable<any> {
     const params: any = {};
-    const headers = this.setHeaders();
+    const headers = this.getHeaders();
 
     params.page = filtro.pagina;
     params.size = filtro.itensPorPagina;
@@ -59,14 +61,26 @@ export class LancamentoService {
   }
 
   excluir(codigo: number): Observable<any> {
-    const headers = this.setHeaders();
+    const headers = this.getHeaders();
     return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { headers });
   }
 
-    private setHeaders(): HttpHeaders {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .set('Content-Type', 'application/json; charset=utf-8');
-    return headers;
+  adicionar(lancamento: LancamentoDTO): Observable<any> {
+    const headers = this.getHeaders();
+
+    const body = JSON.stringify(lancamento);
+
+    return this.http.post(this.lancamentosUrl, body, { headers })
+      .pipe(
+        map( (res) => res)
+      );
   }
-}
+
+    private getHeaders(): HttpHeaders {
+      const headers = new HttpHeaders()
+        .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+        .set('Content-Type', 'application/json; charset=utf-8');
+      return headers;
+    }
+
+  }

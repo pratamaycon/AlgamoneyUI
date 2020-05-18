@@ -4,7 +4,7 @@ import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +17,12 @@ export class PessoaService {
   }
 
   listarTodas(): Observable<any> {
-    const headers = this.setHeaders();
-    return this.http.get(this.pessoasUrl, { headers });
+    const headers = this.getHeaders();
+    return this.http.get(this.pessoasUrl, { headers }).pipe(take(1));
   }
 
   pesquisar(filtro: PessoaFiltro): Observable<any> {
-    const headers = this.setHeaders();
+    const headers = this.getHeaders();
     const params: any = {};
 
     params.page = filtro.pagina;
@@ -41,6 +41,7 @@ export class PessoaService {
           pessoas,
           total: responseJson.totalElements,
         };
+        take(1);
 
         return resultado;
       })
@@ -48,16 +49,16 @@ export class PessoaService {
   }
 
   public excluir(codigo: number): Observable<any> {
-    const headers = this.setHeaders();
-    return this.http.delete(`${this.pessoasUrl}/${codigo}`, { headers });
+    const headers = this.getHeaders();
+    return this.http.delete(`${this.pessoasUrl}/${codigo}`, { headers }).pipe(take(1));
   }
 
-  public atualizarAtivo(codigo: number, pessoaAtiva: boolean): Observable<any> {
-    const headers = this.setHeaders();
-    return this.http.put(`${this.pessoasUrl}/${codigo}/${pessoaAtiva}`, { headers });
+  public ativarPropriedade(codigo: number, atvo: boolean): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, atvo, { headers }).pipe(take(1));
   }
 
-  private setHeaders(): HttpHeaders {
+  private getHeaders(): HttpHeaders {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
       .set('Content-Type', 'application/json; charset=utf-8');

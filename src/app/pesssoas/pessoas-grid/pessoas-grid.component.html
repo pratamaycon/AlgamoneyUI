@@ -28,12 +28,13 @@
       <td *ngFor="let col of columns" class="ui-resizable-column">
         <span class="ui-column-title">{{ col.header }}</span>
         <span *ngIf="col.field === 'ativo'; else colunaSemAtivo">
-          <span *ngIf="pessoa.ativo === true; else inativo" (click)="ativar(pessoa)">
+          <span *ngIf="pessoa.ativo === true; else inativo">
             <a
               class="status"
               href="javascript:;"
               pTooltip="Desativar"
               tooltipPosition="top"
+              (click)="ativarPropriedade(pessoa)"
               >Ativo</a
             >
           </span>
@@ -43,16 +44,17 @@
               href="javascript:;"
               pTooltip="Ativar"
               tooltipPosition="top"
+              (click)="ativarPropriedade(pessoa)"
               >Inativo</a
             >
           </ng-template>
         </span>
         <ng-template #colunaSemAtivo>
           <span *ngIf="col.field === 'cidade'">
-            {{ pessoa?.endereco.cidade }}
+            {{ pessoa.endereco?.cidade }}
           </span>
           <span *ngIf="col.field === 'estado'">
-            {{ pessoa?.endereco.estado }}
+            {{ pessoa.endereco?.estado }}
           </span>
           {{ rowData[col.field] }}
         </ng-template>

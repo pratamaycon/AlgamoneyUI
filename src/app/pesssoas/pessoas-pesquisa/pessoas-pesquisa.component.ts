@@ -1,15 +1,14 @@
-import { ErrorHandlerService } from './../../core/error-handler.service';
-
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
-import { PessoaDTO } from './../pessoa.dto';
 import { PessoaFiltro } from './../PessoaFiltro';
 import { PessoaService } from './../services/pessoa.service';
+import { PessoaDTO } from 'src/app/core/pessoa.dto';
+import { ErrorHandlerService } from './../../core/error-handler.service';
 
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { ConfirmationService } from 'primeng/api';
-import { ToastOptions, ToastyService } from 'ng2-toasty';
+import { ToastyService } from 'ng2-toasty';
 import { Table } from 'primeng/table';
 
 @Component({
@@ -65,26 +64,21 @@ export class PessoasPesquisaComponent implements OnInit {
   }
 
   public excluir(pessoa: PessoaDTO) {
-    const toastOptions: ToastOptions = {
-      title: 'Exclusão',
-      msg: 'Pessoa excluída com sucesso',
-      showClose: true,
-      timeout: 1500,
-      theme: 'bootstrap',
-    };
-    this.pessoasService.excluir(pessoa.codigo).subscribe(
-      (_) => {
+   let msg: string;
+   this.pessoasService.excluir(pessoa.codigo).subscribe(
+      ( _ ) => {
+        msg = 'Pessoa excluída com sucesso';
         if (this.tabela.first === 0) {
           this.pesquisar();
         } else {
           this.tabela.reset();
         }
+        this.toastyService.success({title: 'Exclusão', timeout: 1500, msg});
       },
       (error: any) => {
         this.handlerService.handle(error);
       }
     );
-    this.toastyService.success(toastOptions);
   }
 
   public confirmarExclusao(pessoa: PessoaDTO) {
@@ -96,7 +90,30 @@ export class PessoasPesquisaComponent implements OnInit {
     });
   }
 
-  public bidingTable(table) {
+  public bidingTable(table: Table) {
     this.tabela = table;
+  }
+
+  public ativarPropriedade(pessoa: PessoaDTO) {
+    let msg: string;
+    let codigo: number;
+    let ativo: boolean;
+    if (pessoa.ativo) {
+      msg = 'Pessoa desativada com sucesso';
+      ativo = !pessoa.ativo;
+      codigo = pessoa.codigo;
+    } else {
+      msg = 'Pessoa ativada com sucesso';
+      ativo = !pessoa.ativo;
+      codigo = pessoa.codigo;
+    }
+
+    this.pessoasService.ativarPropriedade(codigo, ativo)
+      .subscribe( ( _ ) => {
+        this.toastyService.success({title: 'Atualização', timeout: 1500, msg});
+        this.pesquisar(this.filtro.pagina);
+    },
+    (error: any) => this.handlerService.handle(error)
+    );
   }
 }
