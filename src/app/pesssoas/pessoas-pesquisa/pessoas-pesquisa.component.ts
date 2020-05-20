@@ -4,8 +4,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 import { PessoaFiltro } from './../PessoaFiltro';
 import { PessoaService } from './../services/pessoa.service';
-import { PessoaDTO } from 'src/app/core/pessoa.dto';
-import { ErrorHandlerService } from './../../core/error-handler.service';
+import { PessoaDTO } from 'src/app/core/models/pessoa.dto';
+import { ErrorHandlerService } from '../../core/service/error-handler.service';
 
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { ConfirmationService } from 'primeng/api';

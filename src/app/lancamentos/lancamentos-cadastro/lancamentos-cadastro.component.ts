@@ -5,12 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { LancamentoService } from './../service/lancamento.service';
 import { CategoriaService } from './../../categorias/categoria.service';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { ErrorHandlerService } from 'src/app/core/service/error-handler.service';
 import { PessoaService } from 'src/app/pesssoas/services/pessoa.service';
 
 import { SelectItem } from 'primeng/api/selectitem';
 import { ToastyService } from 'ng2-toasty';
-import { LancamentoDTO } from 'src/app/core/lancamento.dto';
+import { LancamentoDTO } from 'src/app/core/models/lancamento.dto';
 
 @Component({
   selector: 'app-lancamentos-cadastro',

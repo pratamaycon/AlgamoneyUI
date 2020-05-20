@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map, take } from 'rxjs/operators';
 
-import { LancamentoDTO } from './../../core/lancamento.dto';
+import { LancamentoDTO } from '../../core/models/lancamento.dto';
 import { LancamentoFilter } from '../LancamentoFilter';
 
 import * as moment from 'moment';

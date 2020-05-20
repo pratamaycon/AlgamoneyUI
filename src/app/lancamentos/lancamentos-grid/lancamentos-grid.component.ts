@@ -5,7 +5,7 @@ import { Table } from 'primeng/table/table';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 
 import { LancamentoFilter } from './../LancamentoFilter';
-import { LancamentoDTO } from 'src/app/core/lancamento.dto';
+import { LancamentoDTO } from 'src/app/core/models/lancamento.dto';
 
 @Component({
   selector: 'app-lancamentos-grid',

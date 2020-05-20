@@ -1,0 +1,28 @@
+.titulo {
+  font-weight: bold;
+}
+
+.grid-template-login {
+  display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: auto auto auto ;
+	grid-template-areas:
+    "gridleft login gridright";
+  height: 100%;
+}
+
+.gridleft {
+  grid-area: gridleft;
+}
+
+.logo {
+	grid-area: login;
+}
+
+.gridright {
+  grid-area: gridright;
+}
+
+.input-distance {
+  margin-bottom: 20px;
+}

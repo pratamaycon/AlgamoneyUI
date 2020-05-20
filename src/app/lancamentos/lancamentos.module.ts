@@ -14,7 +14,7 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
-import { SharedModule } from './../shared/message.module';
+import { SharedModule } from '../shared/shared.module';
 import { LancamentosRoutingModule } from './lancamentos.routes';
 
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';

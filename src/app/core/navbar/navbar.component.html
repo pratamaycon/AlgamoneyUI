@@ -8,20 +8,11 @@
   </div>
 </nav>
 
-<!-- <div *ngIf="expandirMenu">
-  <ul class="navbar-menu">
-    <li class="navbar-usuario">José da Silva</li>
-    <li class="navbar-menu-item" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>
-    <li class="navbar-menu-item" routerLinkActive="ativo"><a routerLink="/pessoas">Pessoas</a></li>
-    <li class="navbar-menu-item"><a href="#">Logout</a></li>
-  </ul>
-</div> -->
-
 <p-sidebar [(visible)]="expandirMenu" position="right" [baseZIndex]="10000">
   <ul class="navbar-menu">
     <li class="navbar-usuario">José da Silva</li>
     <li class="navbar-menu-item" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>
-    <li class="navbar-menu-item" routerLinkActive="ativo"><a routerLink="/pessoas">Pessoas</a></li>
+    <li class="navbar-menu-item" routerLinkActive="ativo"><a  routerLink="/pessoas">Pessoas</a></li>
     <li class="navbar-menu-item"><a href="#">Logout</a></li>
   </ul>
 </p-sidebar>

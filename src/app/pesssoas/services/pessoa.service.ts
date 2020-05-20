@@ -1,4 +1,4 @@
-import { PessoaDTO } from 'src/app/core/pessoa.dto';
+import { PessoaDTO } from 'src/app/core/models/pessoa.dto';
 import { PessoaFiltro } from './../PessoaFiltro';
 import { environment } from './../../../environments/environment';
 
@@ -77,7 +77,7 @@ export class PessoaService {
 
     const body = JSON.stringify(pessoa);
 
-    return this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`, body ,{ headers })
+    return this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`, body , { headers })
       .pipe(
         map((res: any) => {
           return res;

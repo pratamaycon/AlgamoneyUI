@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MessageModule } from 'primeng/message';
 import { MessageComponent } from './message/message.component';
 
-
-
 @NgModule({
   declarations: [MessageComponent],
   imports: [

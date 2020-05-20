@@ -5,7 +5,7 @@ import { Table } from 'primeng/table/table';
 import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 
 import { PessoaFiltro } from './../PessoaFiltro';
-import { PessoaDTO } from 'src/app/core/pessoa.dto';
+import { PessoaDTO } from 'src/app/core/models/pessoa.dto';
 @Component({
   selector: 'app-pessoas-grid',
   templateUrl: './pessoas-grid.component.html',

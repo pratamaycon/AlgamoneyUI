@@ -8,10 +8,10 @@ import { ToastyService, ToastOptions } from 'ng2-toasty';
 import { ConfirmationService } from 'primeng/api';
 
 import { LancamentoService } from '../service/lancamento.service';
-import { ErrorHandlerService } from './../../core/error-handler.service';
+import { ErrorHandlerService } from '../../core/service/error-handler.service';
 
 import { LancamentoFilter } from './../LancamentoFilter';
-import { LancamentoDTO } from 'src/app/core/lancamento.dto';
+import { LancamentoDTO } from 'src/app/core/models/lancamento.dto';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',

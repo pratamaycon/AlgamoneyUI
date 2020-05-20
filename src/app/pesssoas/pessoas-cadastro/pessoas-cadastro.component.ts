@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { PessoaDTO, Endereco } from './../../core/pessoa.dto';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { PessoaDTO, Endereco } from '../../core/models/pessoa.dto';
+import { ErrorHandlerService } from 'src/app/core/service/error-handler.service';
 
 import { ToastyService } from 'ng2-toasty';
 import { PessoaService } from '../services/pessoa.service';
@@ -97,6 +97,7 @@ export class PessoasCadastroComponent implements OnInit {
     this.pessoasService.buscarPorCodigo(codigo).subscribe(
       (pessoa: PessoaDTO) => {
         this.formulario.patchValue(pessoa);
+        this.atualizarTitulo(pessoa);
       },
       (erro: any) => this.handlerService.handle(erro)
     );
