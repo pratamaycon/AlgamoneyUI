@@ -4,7 +4,7 @@ export class PessoaDTO {
   ativo: boolean;
   endereco: Endereco;
 
-  constructor(codigo: number, nome?: string, ativo?: boolean, endereco?: Endereco) {
+  constructor(codigo?: number, nome?: string, ativo?: boolean, endereco?: Endereco) {
     this.codigo = codigo;
     this.nome = nome;
     this.ativo = ativo;

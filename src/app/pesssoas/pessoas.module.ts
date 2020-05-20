@@ -13,6 +13,7 @@ import { SharedModule } from './../shared/message.module';
 import { PessoasCadastroComponent } from './pessoas-cadastro/pessoas-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
+import { PessoasRoutingModule } from './pessoas.routes';
 
 @NgModule({
   declarations: [PessoasPesquisaComponent, PessoasCadastroComponent, PessoasGridComponent],
@@ -25,8 +26,9 @@ import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
     ReactiveFormsModule,
     FormsModule,
     InputMaskModule,
-    SharedModule
+    SharedModule,
+    PessoasRoutingModule
   ],
-  exports: [PessoasPesquisaComponent, PessoasCadastroComponent],
+  exports: []
 })
 export class PessoasModule {}

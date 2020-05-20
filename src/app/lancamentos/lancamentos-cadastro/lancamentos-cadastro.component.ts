@@ -1,5 +1,7 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { LancamentoService } from './../service/lancamento.service';
 import { CategoriaService } from './../../categorias/categoria.service';
@@ -8,8 +10,6 @@ import { PessoaService } from 'src/app/pesssoas/services/pessoa.service';
 
 import { SelectItem } from 'primeng/api/selectitem';
 import { ToastyService } from 'ng2-toasty';
-import { CategoriaDTO } from 'src/app/core/categoria.dto';
-import { PessoaDTO } from 'src/app/core/pessoa.dto';
 import { LancamentoDTO } from 'src/app/core/lancamento.dto';
 
 @Component({
@@ -19,15 +19,20 @@ import { LancamentoDTO } from 'src/app/core/lancamento.dto';
 })
 export class LancamentosCadastroComponent implements OnInit {
   public formulario: FormGroup = new FormGroup({
-    vencimento: new FormControl(null, [Validators.required]),
-    pagamento: new FormControl(null),
+    codigo:  new FormControl(null),
+    dataVencimento: new FormControl(null, [Validators.required]),
+    dataPagamento: new FormControl(null),
     descricao: new FormControl(null, [
       Validators.required,
       Validators.minLength(5),
     ]),
     valor: new FormControl(null, [Validators.required]),
-    categoria: new FormControl(null, [Validators.required]),
-    pessoa: new FormControl(null, [Validators.required]),
+    categoria: new FormGroup({
+      codigo: new FormControl(null, [Validators.required]),
+    }),
+    pessoa: new FormGroup({
+      codigo: new FormControl(null, [Validators.required]),
+    }),
     tipo: new FormControl('RECEITA', [Validators.required]),
     observacao: new FormControl(null)
   });
@@ -48,40 +53,72 @@ export class LancamentosCadastroComponent implements OnInit {
     private pessoasService: PessoaService,
     private lancamentoService: LancamentoService,
     private handlerService: ErrorHandlerService,
-    private toastyService: ToastyService
+    private toastyService: ToastyService,
+    private routes: ActivatedRoute,
+    private router: Router,
+    private title: Title
   ) {}
 
   ngOnInit(): void {
-    this.configurarFormulario();
+    this.title.setTitle('Novo Lançamento');
+
+    this.lancamento = new LancamentoDTO();
+    const codLancamento = this.routes.snapshot.params.codigo;
+
+    if (codLancamento) {
+      this.carregarLancamentos(codLancamento);
+    }
+
     this.carregarCategorias();
     this.carregarPessoas();
   }
 
-  private configurarFormulario(): LancamentoDTO {
-    this.lancamento = new LancamentoDTO(
-      this.formulario.controls.tipo.value,
-      this.formulario.controls.valor.value,
-      this.formulario.controls.descricao.value,
-      this.formulario.controls.vencimento.value,
-      this.formulario.controls.pagamento.value,
-      new PessoaDTO(this.formulario.controls.pessoa.value),
-      new CategoriaDTO(this.formulario.controls.categoria.value),
-      this.formulario.controls.observacao.value
+  carregarLancamentos(codigo: number) {
+    this.lancamentoService.buscarPorCodigo(codigo)
+      .subscribe( (lancamento: LancamentoDTO) => {
+        this.formulario.patchValue(lancamento);
+        this.atualizarTitulo(lancamento);
+    },
+    (erro: any) => this.handlerService.handle(erro)
     );
-    return this.lancamento;
   }
 
-  salvar() {
-    const lancamento = this.configurarFormulario();
-    this.lancamentoService.adicionar(lancamento).subscribe((_) => {
+  get editando() {
+    return Boolean(this.formulario.get('codigo').value);
+  }
+
+  salvar(): void {
+    if (this.editando) {
+      this.atualizarLancamento();
+    } else {
+      this.adicionarLancamento();
+    }
+  }
+
+  adicionarLancamento(): void {
+    this.lancamentoService.adicionar(this.formulario.value)
+      .subscribe((lancamentoAdicionado: LancamentoDTO) => {
       this.toastyService.success({
         title: 'Adicionado',
         timeout: 1500,
         msg: 'Lançamento adicionado com sucesso!',
       });
-      this.formulario.reset();
-      this.formulario.get('tipo').setValue('RECEITA');
-      this.lancamento = null;
+      this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
+    },
+    (erro: any) => this.handlerService.handle(erro)
+    );
+  }
+
+  atualizarLancamento(): void {
+    this.lancamentoService.atualizar(this.formulario.value)
+        .subscribe((lanc: LancamentoDTO) => {
+        this.lancamento = lanc;
+        this.toastyService.success({
+          title: 'Alteração',
+          timeout: 1500,
+          msg: 'Lançamento alterado com sucesso!',
+        });
+        this.atualizarTitulo(lanc);
     },
     (erro: any) => this.handlerService.handle(erro)
     );
@@ -109,5 +146,15 @@ export class LancamentosCadastroComponent implements OnInit {
       },
       (erro: any) => this.handlerService.handle(erro)
     );
+  }
+
+  novo(): void {
+    this.formulario.reset();
+    this.formulario.get('tipo').setValue('RECEITA');
+    this.router.navigate(['lancamentos/novo']);
+  }
+
+  atualizarTitulo(lancamento: LancamentoDTO): void {
+    this.title.setTitle(`Edição de Lançamento: ${lancamento.descricao}`);
   }
 }

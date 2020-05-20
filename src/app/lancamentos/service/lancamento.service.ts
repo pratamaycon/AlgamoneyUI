@@ -1,5 +1,3 @@
-
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -46,8 +44,8 @@ export class LancamentoService {
     return this.http
       .get(`${this.lancamentosUrl}?resumo`, { headers, params })
       .pipe(
-        map((res: any) => {
-          const reponseJson: any = res;
+        map((lanc: any) => {
+          const reponseJson: any = lanc;
           const lancamentos: any = reponseJson.content;
 
           const resultado: any = {
@@ -63,27 +61,69 @@ export class LancamentoService {
 
   excluir(codigo: number): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { headers })
+    return this.http
+      .delete(`${this.lancamentosUrl}/${codigo}`, { headers })
       .pipe(take(1));
   }
 
-  adicionar(lancamento: LancamentoDTO): Observable<any> {
+  adicionar(lancamento: LancamentoDTO): Observable<LancamentoDTO> {
     const headers = this.getHeaders();
 
     const body = JSON.stringify(lancamento);
 
-    return this.http.post(this.lancamentosUrl, body, { headers })
+    return this.http.post(this.lancamentosUrl, body, { headers }).pipe(
+      map((lanc: any) => {
+        return lanc;
+      }, take(1))
+    );
+  }
+
+  atualizar(lancamento: LancamentoDTO): Observable<LancamentoDTO> {
+    const headers = this.getHeaders();
+
+    const body = JSON.stringify(lancamento);
+    return this.http
+      .put(`${this.lancamentosUrl}/${lancamento.codigo}`, body, { headers })
       .pipe(
-        map( (res) => res),
-        take(1)
+        map((res: any) => {
+          const lanc = res as LancamentoDTO;
+          this.converterStringParaDatas([lanc]);
+          return lanc;
+        }, take(1))
       );
   }
 
-    private getHeaders(): HttpHeaders {
-      const headers = new HttpHeaders()
-        .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-        .set('Content-Type', 'application/json; charset=utf-8');
-      return headers;
-    }
-
+  buscarPorCodigo(codigo: number): Observable<LancamentoDTO> {
+    const headers = this.getHeaders();
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers }).pipe(
+      map((res: any) => {
+        const lanc = res as LancamentoDTO;
+        this.converterStringParaDatas([lanc]);
+        return lanc;
+      }, take(1))
+    );
   }
+
+  private converterStringParaDatas(lancamentos: LancamentoDTO[]) {
+    for (const lancamento of lancamentos) {
+      lancamento.dataVencimento = moment(
+        lancamento.dataVencimento,
+        'YYYY-MM-DD'
+      ).toDate();
+
+      if (lancamento.dataPagamento) {
+        lancamento.dataPagamento = moment(
+          lancamento.dataPagamento,
+          'YYYY-MM-DD'
+        ).toDate();
+      }
+    }
+  }
+
+  private getHeaders(): HttpHeaders {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .set('Content-Type', 'application/json; charset=utf-8');
+    return headers;
+  }
+}

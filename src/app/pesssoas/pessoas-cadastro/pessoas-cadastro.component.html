@@ -2,7 +2,7 @@
   <form [formGroup]="formulario" novalidate (ngSubmit)="salvar()">
     <div class="ui-g">
       <div class="ui-g-12">
-        <h1>Nova Pessoa</h1>
+        <h1>{{ editando ? 'Edição de' : 'Nova' }} Pessoa</h1>
       </div>
 
       <div class="ui-g-12 ui-md-12 ui-fluid">
@@ -26,77 +26,78 @@
         >
         </app-message>
       </div>
-
-      <div class="ui-g-12 ui-md-9 ui-fluid">
-        <label>Logradouro</label>
-        <input pInputText type="text" formControlName="logradouro" />
-        <app-message
-          [control]="formulario.get('logradouro')"
-          error="required"
-          text="Campo Obrigatório"
-        >
-        </app-message>
-      </div>
-
-      <div class="ui-g-12 ui-md-3 ui-fluid">
-        <label>Número</label>
-        <input pInputText type="text" formControlName="numero" />
-        <app-message
-          [control]="formulario.get('numero')"
-          error="required"
-          text="Campo Obrigatório"
-        >
-        </app-message>
-      </div>
-
-      <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>Complemento</label>
-        <input pInputText type="text" formControlName="complemento" />
-      </div>
-
-      <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>Bairro</label>
-        <input pInputText type="text" formControlName="bairro" />
-        <app-message
-          [control]="formulario.get('bairro')"
-          error="required"
-          text="Campo Obrigatório"
-        >
-        </app-message>
-      </div>
-
-      <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>CEP</label>
-        <p-inputMask mask="99999-999" formControlName="cep">
+      <div class="ui-g" formGroupName="endereco">
+        <div class="ui-g-12 ui-md-9 ui-fluid">
+          <label>Logradouro</label>
+          <input pInputText type="text" formControlName="logradouro" />
           <app-message
-            [control]="formulario.get('cep')"
+            [control]="formulario.get('endereco.logradouro')"
             error="required"
             text="Campo Obrigatório"
           >
           </app-message>
-        </p-inputMask>
-      </div>
+        </div>
 
-      <div class="ui-g-12 ui-md-6 ui-fluid">
-        <label>Cidade</label>
-        <input pInputText type="text" formControlName="cidade" />
-        <app-message
-          [control]="formulario.get('cidade')"
-          error="required"
-          text="Campo Obrigatório"
-        >
-        </app-message>
-      </div>
+        <div class="ui-g-12 ui-md-3 ui-fluid">
+          <label>Número</label>
+          <input pInputText type="text" formControlName="numero" />
+          <app-message
+            [control]="formulario.get('endereco.numero')"
+            error="required"
+            text="Campo Obrigatório"
+          >
+          </app-message>
+        </div>
 
-      <div class="ui-g-12 ui-md-6 ui-fluid">
-        <label>Estado</label>
-        <input pInputText type="text" formControlName="estado" />
-        <app-message
-          [control]="formulario.get('estado')"
-          error="required"
-          text="Campo Obrigatório"
-        >
-        </app-message>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Complemento</label>
+          <input pInputText type="text" formControlName="complemento" />
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Bairro</label>
+          <input pInputText type="text" formControlName="bairro" />
+          <app-message
+            [control]="formulario.get('endereco.bairro')"
+            error="required"
+            text="Campo Obrigatório"
+          >
+          </app-message>
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>CEP</label>
+          <p-inputMask mask="99.999-99" formControlName="cep">
+            <app-message
+              [control]="formulario.get('endereco.cep')"
+              error="required"
+              text="Campo Obrigatório"
+            >
+            </app-message>
+          </p-inputMask>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+          <label>Cidade</label>
+          <input pInputText type="text" formControlName="cidade" />
+          <app-message
+            [control]="formulario.get('endereco.cidade')"
+            error="required"
+            text="Campo Obrigatório"
+          >
+          </app-message>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+          <label>Estado</label>
+          <input pInputText type="text" formControlName="estado" />
+          <app-message
+            [control]="formulario.get('endereco.estado')"
+            error="required"
+            text="Campo Obrigatório"
+          >
+          </app-message>
+        </div>
       </div>
 
       <div class="ui-g-12">
@@ -111,12 +112,14 @@
           type="button"
           label="Novo"
           class="ui-button-info"
+          (click)="novo()"
         ></button>
         <button
           pButton
           type="button"
-          label="Voltar"
+          label="Voltar para a pesquisa"
           class="ui-button-info"
+          routerLink="/pessoas"
         ></button>
       </div>
     </div>

@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
-import { ROUTES } from './app.routes';
+
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { LancamentosModule } from './lancamentos/lancamentos.module';
@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 
 import { registerLocaleData } from '@angular/common';
 import localept from '@angular/common/locales/pt';
+import { AppRoutingModule } from './app.routes';
 
 registerLocaleData(localept, 'pt');
 
@@ -21,8 +22,8 @@ registerLocaleData(localept, 'pt');
     CoreModule,
     LancamentosModule,
     PessoasModule,
-    RouterModule.forRoot(ROUTES),
     HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent],

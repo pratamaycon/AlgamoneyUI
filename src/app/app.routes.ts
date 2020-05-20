@@ -1,16 +1,17 @@
-import { PessoasCadastroComponent } from './pesssoas/pessoas-cadastro/pessoas-cadastro.component';
-import { LancamentosCadastroComponent } from './lancamentos/lancamentos-cadastro/lancamentos-cadastro.component';
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
+import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { HomeComponent } from './core/home/home.component';
-import { PessoasPesquisaComponent } from './pesssoas/pessoas-pesquisa/pessoas-pesquisa.component';
-import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
 
-
-export const ROUTES: Routes = [
+const ROUTES: Routes = [
   { path: '' , component: HomeComponent},
-  { path: 'lancamentos-pesquisa', component: LancamentosPesquisaComponent },
-  { path: 'lancamentos-cadastro', component: LancamentosCadastroComponent },
-  { path: 'pessoas-pesquisa', component: PessoasPesquisaComponent },
-  { path: 'pessoas-cadastro', component: PessoasCadastroComponent }
+  { path: '**', component: PaginaNaoEncontradaComponent}
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(ROUTES)],
+  exports: [RouterModule]
+})
+
+export class AppRoutingModule { }

@@ -12,8 +12,8 @@ export class LancamentoDTO {
   valor: number;
   observacao: string;
 
-  constructor(tipo: string, valor: number, descricao: string, dataPagamento: Date,
-              dataVencimento: Date, pessoa: PessoaDTO, categoria: CategoriaDTO,
+  constructor(tipo?: string, valor?: number, descricao?: string, dataPagamento?: Date,
+              dataVencimento?: Date, pessoa?: PessoaDTO, categoria?: CategoriaDTO,
               observacao?: string, codigo?: number ) {
     this.tipo = tipo;
     this.valor = valor;

@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -36,10 +37,12 @@ export class LancamentosPesquisaComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private toastyService: ToastyService,
     private confirmationService: ConfirmationService,
-    private handlerService: ErrorHandlerService
+    private handlerService: ErrorHandlerService,
+    private title: Title
   ) {}
 
   ngOnInit(): void {
+    this.title.setTitle('Pesquisa de Lançamentos');
     this.cols = [
       { field: 'pessoa', header: 'Pessoa', width: '20%' },
       { field: 'descricao', header: 'Descrição', width: '20%' },

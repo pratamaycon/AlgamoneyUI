@@ -49,25 +49,53 @@ export class PessoaService {
     );
   }
 
-  public excluir(codigo: number): Observable<any> {
+   excluir(codigo: number): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(`${this.pessoasUrl}/${codigo}`, { headers }).pipe(take(1));
   }
 
-  public ativarPropriedade(codigo: number, atvo: boolean): Observable<any> {
+   ativarPropriedade(codigo: number, atvo: boolean): Observable<any> {
     const headers = this.getHeaders();
     return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, atvo, { headers }).pipe(take(1));
   }
 
-  public adicionar(pessoa: PessoaDTO): Observable<PessoaDTO> {
+   adicionar(pessoa: PessoaDTO): Observable<PessoaDTO> {
     const headers = this.getHeaders();
 
     const body = JSON.stringify(pessoa);
 
     return this.http.post(this.pessoasUrl, body, { headers }).pipe(
-      map( (res: any) => res ),
+      map( (res: any) => {
+        return res;
+      }),
       take(1)
     );
+  }
+
+  atualizar(pessoa: PessoaDTO): Observable<PessoaDTO> {
+    const headers = this.getHeaders();
+
+    const body = JSON.stringify(pessoa);
+
+    return this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`, body ,{ headers })
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        take(1)
+      );
+  }
+
+  buscarPorCodigo(codigo: number): Observable<PessoaDTO> {
+    const headers = this.getHeaders();
+
+    return this.http.get(`${this.pessoasUrl}/${codigo}`, {headers})
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        take(1)
+      );
   }
 
   private getHeaders(): HttpHeaders {
