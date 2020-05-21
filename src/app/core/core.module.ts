@@ -1,5 +1,5 @@
 import { Title } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -12,12 +12,14 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao
 import { LancamentosModule } from '../lancamentos/lancamentos.module';
 import { PessoasModule } from '../pesssoas/pessoas.module';
 import { SegurancaModule } from '../seguranca/seguranca.module';
+import { AuthService } from '../seguranca/service/auth.service';
 
 import { ToastyModule } from 'ng2-toasty';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { SidebarModule } from 'primeng/sidebar';
 import { RouterModule } from '@angular/router';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [NavbarComponent, HomeComponent, PaginaNaoEncontradaComponent],
@@ -37,9 +39,11 @@ import { RouterModule } from '@angular/router';
     LancamentoService,
     PessoaService,
     ConfirmationService,
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
     CategoriaService,
-    Title
+    Title,
+    AuthService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
   ],
 })
 export class CoreModule {}

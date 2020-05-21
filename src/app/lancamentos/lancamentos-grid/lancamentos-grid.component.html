@@ -34,7 +34,7 @@
             class="col-valor"
             [style.color]="lanc.tipo === 'DESPESA' ? 'red' : 'blue'"
           >
-            {{ lanc.valor | currency: 'BRL':true }}
+            {{ lanc.valor | currency : 'R$ ' }}
           </span>
         </span>
         <ng-template #colunasSemValor>

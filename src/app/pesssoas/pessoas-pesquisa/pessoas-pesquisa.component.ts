@@ -49,6 +49,10 @@ export class PessoasPesquisaComponent implements OnInit {
     ];
   }
 
+  onChangeCode(evento) {
+    this.filtro.nome = evento;
+ }
+
   pesquisar(pagina: number = 0): void {
     this.filtro.pagina = pagina;
 

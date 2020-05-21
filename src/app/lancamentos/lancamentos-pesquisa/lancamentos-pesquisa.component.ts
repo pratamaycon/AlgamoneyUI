@@ -52,6 +52,18 @@ export class LancamentosPesquisaComponent implements OnInit {
     ];
   }
 
+  onChangeDescricao(evento) {
+    this.filtro.descricao = evento
+  }
+
+  onChangeDataInicio(evento) {
+    this.filtro.dataVencimentoInicio = evento;
+  }
+
+  onChangeDataFim(evento){
+    this.filtro.dataVencimentoFim = evento;
+  }
+
   public pesquisar(pagina: number = 0): void {
     this.filtro.pagina = pagina;
 

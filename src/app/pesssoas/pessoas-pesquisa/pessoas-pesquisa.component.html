@@ -11,7 +11,7 @@
           type="text"
           pInputText
           formControlName="nome"
-          [(ngModel)]="filtro.nome"
+          (ngModelChange)="onChangeCode($event)"
         />
       </div>
 

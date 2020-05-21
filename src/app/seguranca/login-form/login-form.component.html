@@ -1,12 +1,42 @@
 <div class="container">
   <div class="ui-g grid-template-login">
     <div class="gridleft"></div>
-    <form autocomplete="off">
+
+    <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="autenticar(); senha.value = ''">
       <div class="login ui-g-12 ui-fluid">
         <h1 class="titulo">Login</h1>
-        <input class="input-distance" type="text" pInputText placeholder="E-mail" />
-        <input class="input-distance"  type="password" pInputText placeholder="senha" />
-        <button [disabled]="true" pButton type="submit" label="Login"></button>
+        <input
+          class="input-distance"
+          formControlName="nome"
+          type="text"
+          pInputText
+          placeholder="E-mail"
+        />
+        <app-message
+          [control]="formulario.get('nome')"
+          error="required"
+          text="Campos Obrigatórios"
+        >
+        </app-message>
+        <input
+          class="input-distance"
+          formControlName="senha"
+          type="password"
+          pInputText
+          placeholder="senha" #senha
+        />
+        <app-message
+          [control]="formulario.get('senha')"
+          error="required"
+          text="Campos Obrigatórios"
+        >
+        </app-message>
+        <button
+          [disabled]="formulario.invalid ? true : false"
+          pButton
+          type="submit"
+          label="Login"
+        ></button>
       </div>
     </form>
     <div class="gridright"></div>
