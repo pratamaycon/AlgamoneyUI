@@ -8,8 +8,6 @@ import { SegurancaRoutingModule } from './seguranca.routes';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-
 @NgModule({
   declarations: [LoginFormComponent],
   imports: [
@@ -19,8 +17,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ButtonModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
   ],
-  exports: []
+  exports: [],
+  providers: [],
 })
 export class SegurancaModule {}

@@ -33,7 +33,6 @@ export class LoginFormComponent implements OnInit {
       this.router.navigate(['/lancamentos']);
     },
     (erro: any) => {
-      console.log(erro);
       this.handlerService.handle(erro);
     }
     );

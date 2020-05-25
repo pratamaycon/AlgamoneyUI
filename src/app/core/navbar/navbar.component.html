@@ -2,7 +2,9 @@
   <div class="container">
     <div class="ui-g">
       <div class="ui-g-12">
-        <a href="javascript:;" (click)="exibeMenu()" class="navbar-toggle"><i class="pi pi-bars"></i></a>
+        <a href="javascript:;" (click)="exibeMenu()" class="navbar-toggle"
+          ><i class="pi pi-bars"></i
+        ></a>
       </div>
     </div>
   </div>
@@ -10,9 +12,21 @@
 
 <p-sidebar [(visible)]="expandirMenu" position="right" [baseZIndex]="10000">
   <ul class="navbar-menu">
-    <li class="navbar-usuario">José da Silva</li>
-    <li class="navbar-menu-item" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>
-    <li class="navbar-menu-item" routerLinkActive="ativo"><a  routerLink="/pessoas">Pessoas</a></li>
+    <li class="navbar-usuario">{{ auth.jwtPayload?.nome }}</li>
+    <li
+      class="navbar-menu-item"
+      routerLinkActive="ativo"
+      *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"
+    >
+      <a routerLink="/lancamentos">Lançamentos</a>
+    </li>
+    <li
+      class="navbar-menu-item"
+      routerLinkActive="ativo"
+      *ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')"
+    >
+      <a routerLink="/pessoas">Pessoas</a>
+    </li>
     <li class="navbar-menu-item"><a href="#">Logout</a></li>
   </ul>
 </p-sidebar>

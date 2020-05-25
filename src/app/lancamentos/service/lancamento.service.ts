@@ -20,7 +20,6 @@ export class LancamentoService {
 
   pesquisar(filtro: LancamentoFilter): Observable<any> {
     const params: any = {};
-    const headers = this.getHeaders();
 
     params.page = filtro.pagina;
     params.size = filtro.itensPorPagina;
@@ -42,7 +41,7 @@ export class LancamentoService {
     }
 
     return this.http
-      .get(`${this.lancamentosUrl}?resumo`, { headers, params })
+      .get(`${this.lancamentosUrl}?resumo`, { params })
       .pipe(
         map((lanc: any) => {
           const reponseJson: any = lanc;
@@ -60,9 +59,8 @@ export class LancamentoService {
   }
 
   excluir(codigo: number): Observable<any> {
-    const headers = this.getHeaders();
     return this.http
-      .delete(`${this.lancamentosUrl}/${codigo}`, { headers })
+      .delete(`${this.lancamentosUrl}/${codigo}`)
       .pipe(take(1));
   }
 
@@ -94,8 +92,7 @@ export class LancamentoService {
   }
 
   buscarPorCodigo(codigo: number): Observable<LancamentoDTO> {
-    const headers = this.getHeaders();
-    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers }).pipe(
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`).pipe(
       map((res: any) => {
         const lanc = res as LancamentoDTO;
         this.converterStringParaDatas([lanc]);
@@ -122,7 +119,6 @@ export class LancamentoService {
 
   private getHeaders(): HttpHeaders {
     const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
       .set('Content-Type', 'application/json; charset=utf-8');
     return headers;
   }

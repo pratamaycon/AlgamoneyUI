@@ -1,3 +1,4 @@
+import { AuthService } from './../../seguranca/service/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +10,7 @@ export class NavbarComponent implements OnInit {
 
   public expandirMenu = false;
 
-  constructor() {}
+  constructor(public auth: AuthService) {}
 
   ngOnInit(): void {}
 
