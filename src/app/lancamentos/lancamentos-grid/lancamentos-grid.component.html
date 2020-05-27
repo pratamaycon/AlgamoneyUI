@@ -71,6 +71,7 @@
           pTooltip="Excluir"
           tooltipPosition="top"
           pButton
+          [disabled]="!authService.temPermissao('ROLE_REMOVER_LANCAMENTO')"
         ></button>
       </td>
     </tr>

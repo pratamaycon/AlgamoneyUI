@@ -1,5 +1,4 @@
 import { TokenInterceptor } from './seguranca/service/token.interceptor';
-import { AuthService } from './seguranca/service/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -11,7 +10,6 @@ import { CoreModule } from './core/core.module';
 import { registerLocaleData } from '@angular/common';
 import localept from '@angular/common/locales/pt';
 import { AppRoutingModule } from './app.routes';
-import { JwtInterceptor } from './seguranca/service/jwt.interceptor';
 
 registerLocaleData(localept, 'pt');
 
@@ -23,11 +21,6 @@ registerLocaleData(localept, 'pt');
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
       multi: true,
     },
   ],

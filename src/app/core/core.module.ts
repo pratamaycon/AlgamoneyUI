@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
 import { ErrorHandlerService } from './service/error-handler.service';
 import { LancamentoService } from '../lancamentos/service/lancamento.service';
 import { PessoaService } from '../pesssoas/services/pessoa.service';
@@ -22,7 +21,7 @@ import { RouterModule } from '@angular/router';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
-  declarations: [NavbarComponent, HomeComponent, PaginaNaoEncontradaComponent],
+  declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
   imports: [
     CommonModule,
     ToastyModule.forRoot(),
@@ -33,7 +32,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     PessoasModule,
     SegurancaModule,
   ],
-  exports: [NavbarComponent, HomeComponent, ToastyModule, ConfirmDialogModule],
+  exports: [NavbarComponent, ToastyModule, ConfirmDialogModule],
   providers: [
     ErrorHandlerService,
     LancamentoService,

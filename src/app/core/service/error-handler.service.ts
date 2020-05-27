@@ -29,7 +29,6 @@ export class ErrorHandlerService {
         msg = errorResponse.error.error;
       }
     } else {
-      titulo = 'Erro inesperado';
       msg = 'Erro ao processar serviço remoto. Tente Novamente';
     }
 

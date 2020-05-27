@@ -6,6 +6,7 @@ import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 
 import { LancamentoFilter } from './../LancamentoFilter';
 import { LancamentoDTO } from 'src/app/core/models/lancamento.dto';
+import { AuthService } from 'src/app/seguranca/service/auth.service';
 
 @Component({
   selector: 'app-lancamentos-grid',
@@ -26,7 +27,7 @@ export class LancamentosGridComponent implements OnInit, OnChanges {
 
   @ViewChild('tabela', { static: false }) grid;
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnChanges() {
     this.tabela = this.grid;
