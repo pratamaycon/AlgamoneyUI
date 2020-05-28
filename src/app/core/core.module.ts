@@ -8,8 +8,6 @@ import { LancamentoService } from '../lancamentos/service/lancamento.service';
 import { PessoaService } from '../pesssoas/services/pessoa.service';
 import { CategoriaService } from './../categorias/categoria.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
-import { LancamentosModule } from '../lancamentos/lancamentos.module';
-import { PessoasModule } from '../pesssoas/pessoas.module';
 import { SegurancaModule } from '../seguranca/seguranca.module';
 import { AuthService } from '../seguranca/service/auth.service';
 
@@ -19,6 +17,7 @@ import { ConfirmationService } from 'primeng/api';
 import { SidebarModule } from 'primeng/sidebar';
 import { RouterModule } from '@angular/router';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
@@ -28,8 +27,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     ConfirmDialogModule,
     SidebarModule,
     RouterModule,
-    LancamentosModule,
-    PessoasModule,
+    BrowserAnimationsModule,
     SegurancaModule,
   ],
   exports: [NavbarComponent, ToastyModule, ConfirmDialogModule],

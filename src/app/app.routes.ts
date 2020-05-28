@@ -5,6 +5,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 const ROUTES: Routes = [
+  {path: 'pessoas', loadChildren: () => import('src/app/pesssoas/pessoas.module').then(m => m.PessoasModule)},
+  {path: 'lancamentos', loadChildren: () => import('src/app/lancamentos/lancamentos.module').then(m => m.LancamentosModule)},
+
   { path: '' , redirectTo: 'lancamentos', pathMatch: 'full'},
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: '**', component: PaginaNaoEncontradaComponent}

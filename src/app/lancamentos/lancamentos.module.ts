@@ -25,7 +25,6 @@ import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.co
   declarations: [LancamentosPesquisaComponent, LancamentosCadastroComponent, LancamentosGridComponent],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     InputTextModule,
     ButtonModule,
     TableModule,

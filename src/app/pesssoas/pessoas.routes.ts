@@ -7,7 +7,7 @@ import { AuthGuard } from '../seguranca/guard/auth.guard';
 
 const ROUTES: Routes = [
   {
-    path: 'pessoas',
+    path: '',
     component: PessoasPesquisaComponent,
     canActivate: [AuthGuard],
     data: {
@@ -15,7 +15,7 @@ const ROUTES: Routes = [
     },
   },
   {
-    path: 'pessoas/novo',
+    path: 'novo',
     component: PessoasCadastroComponent,
     canActivate: [AuthGuard],
     data: {
@@ -23,7 +23,7 @@ const ROUTES: Routes = [
     },
   },
   {
-    path: 'pessoas/:codigo',
+    path: ':codigo',
     component: PessoasCadastroComponent,
     canActivate: [AuthGuard],
     data: {

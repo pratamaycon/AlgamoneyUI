@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { registerLocaleData } from '@angular/common';
 import localept from '@angular/common/locales/pt';
 import { AppRoutingModule } from './app.routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localept, 'pt');
 
