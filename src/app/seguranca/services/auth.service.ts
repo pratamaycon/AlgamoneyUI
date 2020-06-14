@@ -1,6 +1,6 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, catchError, share } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';

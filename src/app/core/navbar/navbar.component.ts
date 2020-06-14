@@ -1,5 +1,5 @@
-import { LogoutService } from './../../seguranca/service/logout.service';
-import { AuthService } from './../../seguranca/service/auth.service';
+import { LogoutService } from './../../seguranca/services/logout.service';
+import { AuthService } from './../../seguranca/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ErrorHandlerService } from '../service/error-handler.service';
 import { Router } from '@angular/router';

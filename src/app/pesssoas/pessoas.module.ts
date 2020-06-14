@@ -16,9 +16,10 @@ import { PessoasCadastroComponent } from './pessoas-cadastro/pessoas-cadastro.co
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
 import { PessoasRoutingModule } from './pessoas.routes';
+import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 @NgModule({
-  declarations: [PessoasPesquisaComponent, PessoasCadastroComponent, PessoasGridComponent],
+  declarations: [PessoasPesquisaComponent, PessoasCadastroComponent, PessoasGridComponent, PessoaCadastroContatoComponent],
   imports: [
     CommonModule,
     InputTextModule,

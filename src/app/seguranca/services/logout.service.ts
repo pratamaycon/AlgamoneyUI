@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { AuthService } from 'src/app/seguranca/service/auth.service';
+import { AuthService } from 'src/app/seguranca/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';

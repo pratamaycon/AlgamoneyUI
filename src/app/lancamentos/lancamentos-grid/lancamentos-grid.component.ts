@@ -6,7 +6,7 @@ import { LazyLoadEvent } from 'primeng/api/lazyloadevent';
 
 import { LancamentoFilter } from './../LancamentoFilter';
 import { LancamentoDTO } from 'src/app/core/models/lancamento.dto';
-import { AuthService } from 'src/app/seguranca/service/auth.service';
+import { AuthService } from 'src/app/seguranca/services/auth.service';
 
 @Component({
   selector: 'app-lancamentos-grid',

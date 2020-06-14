@@ -1,4 +1,4 @@
-import { LogoutService } from './service/logout.service';
+import { LogoutService } from './services/logout.service';
 import { AuthGuard } from './guard/auth.guard';
 import { SharedModule } from './../shared/shared.module';
 import { LoginFormComponent } from './login-form/login-form.component';

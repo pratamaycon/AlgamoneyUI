@@ -11,7 +11,7 @@ import { PessoaService } from '../pesssoas/services/pessoa.service';
 import { CategoriaService } from './../categorias/categoria.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { SegurancaModule } from '../seguranca/seguranca.module';
-import { AuthService } from '../seguranca/service/auth.service';
+import { AuthService } from '../seguranca/services/auth.service';
 
 import { ToastyModule } from 'ng2-toasty';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';

@@ -1,4 +1,4 @@
-import { TokenInterceptor } from './seguranca/service/token.interceptor';
+import { TokenInterceptor } from './seguranca/services/token.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -10,7 +10,6 @@ import { CoreModule } from './core/core.module';
 import { registerLocaleData } from '@angular/common';
 import localept from '@angular/common/locales/pt';
 import { AppRoutingModule } from './app.routes';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localept, 'pt');
 
