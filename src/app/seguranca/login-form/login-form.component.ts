@@ -30,7 +30,7 @@ export class LoginFormComponent implements OnInit {
       this.formulario.controls.nome.value,
       this.formulario.controls.senha.value,
     ).subscribe((_) => {
-      this.router.navigate(['/lancamentos']);
+      this.router.navigate(['/dashboard']);
     },
     (erro: any) => {
       this.handlerService.handle(erro);

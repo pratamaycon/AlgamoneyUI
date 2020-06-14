@@ -7,8 +7,10 @@ import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada/pagin
 const ROUTES: Routes = [
   {path: 'pessoas', loadChildren: () => import('src/app/pesssoas/pessoas.module').then(m => m.PessoasModule)},
   {path: 'lancamentos', loadChildren: () => import('src/app/lancamentos/lancamentos.module').then(m => m.LancamentosModule)},
+  {path: 'dashboard', loadChildren: () => import('src/app/dashboard/dashboard.module').then(m => m.DashboardModule)},
+  {path: 'relatorios', loadChildren: () => import('src/app/relatorios/relatorios.module').then(m => m.RelatoriosModule)},
 
-  { path: '' , redirectTo: 'lancamentos', pathMatch: 'full'},
+  { path: '' , redirectTo: 'dashboard', pathMatch: 'full'},
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: '**', component: PaginaNaoEncontradaComponent}
 ];

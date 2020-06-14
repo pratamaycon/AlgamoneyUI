@@ -16,7 +16,6 @@ export class AppComponent implements DoCheck {
   }
 
   ngDoCheck() {
-    console.log(window.location.href.substring(21));
     this.path = window.location.href.substring(21);
   }
 }

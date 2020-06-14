@@ -1,13 +1,15 @@
+import { Contato } from './../../core/models/contatos';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
-import { PessoaDTO, Endereco } from '../../core/models/pessoa.dto';
+import { PessoaDTO } from '../../core/models/pessoa.dto';
 import { ErrorHandlerService } from 'src/app/core/service/error-handler.service';
 
 import { ToastyService } from 'ng2-toasty';
 import { PessoaService } from '../services/pessoa.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { EMAILPATTERN } from 'src/app/shared/regex';
 
 @Component({
   selector: 'app-pessoas-cadastro',
@@ -27,10 +29,28 @@ export class PessoasCadastroComponent implements OnInit {
       estado: new FormControl(null, [Validators.required]),
       complemento: new FormControl(null),
     }),
-    ativo: new FormControl(true)
+    ativo: new FormControl(true),
+    contatos: new FormGroup({
+      codigo: new FormControl(null),
+      nome: new FormControl(null),
+      email: new FormControl(null),
+      telefone: new FormControl(null)
+    })
+  });
+
+  public formularioContato: FormGroup = new FormGroup({
+    contatos: new FormGroup({
+      codigo: new FormControl(null),
+      nome: new FormControl(null, [Validators.required, Validators.minLength(5)]),
+      email: new FormControl(null,  [Validators.required, Validators.pattern(EMAILPATTERN)]),
+      telefone: new FormControl(null)
+    })
   });
 
   public pessoa: PessoaDTO;
+  public colsContatos: any;
+  public exibindoFormularioContato = false;
+  public contatoIndex: number;
 
   constructor(
     private handlerService: ErrorHandlerService,
@@ -41,10 +61,20 @@ export class PessoasCadastroComponent implements OnInit {
     private title: Title
   ) {}
 
+
+
   ngOnInit(): void {
     this.title.setTitle('Nova Pessoa');
 
+    this.colsContatos = [
+      { width: '30%' },
+      { width: '28%' },
+      { width: '20%' },
+      { width: '12%' },
+    ]
+
     this.pessoa = new PessoaDTO();
+    this.pessoa.contatos = [];
 
     const codPessoa = this.routes.snapshot.params.codigo;
 
@@ -53,7 +83,24 @@ export class PessoasCadastroComponent implements OnInit {
     }
   }
 
+  prepararNovoContato() {
+    this.exibindoFormularioContato = true;
+    this.contatoIndex = this.pessoa.contatos.length;
+  }
+
+  confirmarContato() {
+    this.pessoa.contatos[this.contatoIndex] = this.formularioContato.value.contatos;
+    this.exibindoFormularioContato = false;
+  }
+
+  prepararEdicaoContato(contato: Contato, indice: number) {
+    this.exibindoFormularioContato = true;
+    this.formularioContato.get('contatos').setValue(contato);
+    this.contatoIndex = indice;
+  }
+
   salvar() {
+    this.formulario.value.contatos = this.pessoa.contatos;
     if (this.editando) {
       this.atualizarPessoa();
     } else {
@@ -96,6 +143,7 @@ export class PessoasCadastroComponent implements OnInit {
   carregarPessoas(codigo: number): void {
     this.pessoasService.buscarPorCodigo(codigo).subscribe(
       (pessoa: PessoaDTO) => {
+        this.pessoa = pessoa;
         this.formulario.patchValue(pessoa);
         this.atualizarTitulo(pessoa);
       },

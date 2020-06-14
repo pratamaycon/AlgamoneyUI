@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="formulario" novalidate (ngSubmit)="salvar()">
+  <form [formGroup]="formulario" (ngSubmit)="salvar()">
     <div class="ui-g">
       <div class="ui-g-12">
         <h1>{{ editando ? 'Edição de' : 'Nova' }} Pessoa</h1>
@@ -67,7 +67,7 @@
 
         <div class="ui-g-12 ui-md-4 ui-fluid">
           <label>CEP</label>
-          <p-inputMask mask="99.999-99" formControlName="cep">
+          <p-inputMask mask="99.999-999" formControlName="cep">
             <app-message
               [control]="formulario.get('endereco.cep')"
               error="required"
@@ -101,6 +101,59 @@
       </div>
 
       <div class="ui-g-12">
+        <p-panel header="Contatos">
+          <div class="ui-g">
+            <div class="ui-g-12">
+              <button pButton icon="pi pi-plus" type="button" label="Novo"
+              class="ui-button-secondary" (click)="prepararNovoContato()"></button>
+            </div>
+            <div class="ui-g-12">
+              <p-table [value]="pessoa.contatos" [responsive]="true" [resizableColumns]="true"  [columns]="colsContatos">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col *ngFor="let col of columns" [style.width]="col.width" />
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Ações</th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-contato let-rowIndex="rowIndex">
+                  <tr>
+                    <td>{{ contato.nome }}</td>
+                    <td>{{ contato.email }}</td>
+                    <td>{{ contato.telefone }}</td>
+                    <td class="col-center">
+
+                    <button pButton icon="pi pi-pencil" type="button" pTooltip="Editar"
+                    (click)="prepararEdicaoContato(contato, rowIndex)" tooltipPosition="top"></button>
+
+                    <button pButton icon="pi pi-trash" type="button" pTooltip="Excluir"
+                        tooltipPosition="top"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage" let-columns>
+                  <tr>
+                    <td [attr.colspan]="4">
+                      <strong class="semPessoas"> Nenhum Contato Encontrado </strong>
+                    </td>
+                  </tr>
+                </ng-template>
+
+              </p-table>
+            </div>
+          </div>
+        </p-panel>
+      </div>
+
+      <div class="ui-g-12">
         <button
           [disabled]="formulario.invalid ? true : false"
           pButton
@@ -125,3 +178,50 @@
     </div>
   </form>
 </div>
+
+<p-dialog header="Novo Contato" [(visible)]="exibindoFormularioContato">
+  <form [formGroup]="formularioContato" (ngSubmit)="confirmarContato()">
+
+    <div class="ui-g-12" formGroupName="contatos">
+      <div class="ui-g-12 ui-fluid">
+        <label class="distanciaLabelInput">Nome</label>
+        <input pInputText type="text" formControlName="nome" />
+        <app-message
+          [control]="formularioContato.get('contatos.nome')"
+          error="required"
+          text="Campo Obrigatório">
+        </app-message>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label class="distanciaLabelInput">E-mail</label>
+        <input pInputText type="email" formControlName="email"  />
+        <app-message
+          [control]="formularioContato.get('contatos.email')"
+          error="required"
+          text="Campo Obrigatório">
+        </app-message>
+        <app-message
+        [control]="formularioContato.get('contatos.email')"
+        error="pattern"
+        text="E-mail inválido">
+        </app-message>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label class="distanciaLabelInput">Telefone</label>
+        <p-inputMask mask="(99) 99999-999?9" formControlName="telefone"></p-inputMask>
+      </div>
+
+      <div class="ui-g-12">
+        <button
+            [disabled]="formularioContato.invalid ? true : false"
+            pButton
+            type="submit"
+            label="Confirmar">
+          </button>
+      </div>
+    </div>
+
+  </form>
+</p-dialog>

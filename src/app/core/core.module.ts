@@ -1,3 +1,5 @@
+import { RelatoriosService } from './../relatorios/services/relatorios.service';
+import { DashboardService } from './../dashboard/services/dashboard.service';
 import { Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -37,6 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PessoaService,
     ConfirmationService,
     CategoriaService,
+    DashboardService,
+    RelatoriosService,
     Title,
     AuthService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

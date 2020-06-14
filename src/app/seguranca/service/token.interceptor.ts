@@ -23,8 +23,6 @@ export class TokenInterceptor implements HttpInterceptor {
     if (request.url.includes('/oauth/token')) {
       return next.handle(request).pipe(
         catchError((erro: any) => {
-          console.log(erro);
-
           if (
             erro.status === 401 &&
             erro.error.error_description.includes(
