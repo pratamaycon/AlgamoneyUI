@@ -7,7 +7,7 @@ import { Table } from 'primeng/table/table';
 import { ToastyService, ToastOptions } from 'ng2-toasty';
 import { ConfirmationService } from 'primeng/api';
 
-import { LancamentoService } from '../service/lancamento.service';
+import { LancamentoService } from '../services/lancamento.service';
 import { ErrorHandlerService } from '../../core/service/error-handler.service';
 
 import { LancamentoFilter } from './../LancamentoFilter';

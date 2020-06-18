@@ -6,15 +6,21 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
+import { Estado } from 'src/app/core/models/estado.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PessoaService {
+
   public pessoasUrl: string;
+  public cidadesUrl: string;
+  public estadosUrl: string;
 
   constructor(private http: HttpClient) {
     this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+    this.cidadesUrl = `${environment.apiUrl}/cidades`;
+    this.estadosUrl = `${environment.apiUrl}/estados`;
   }
 
   listarTodas(): Observable<any> {
@@ -96,6 +102,30 @@ export class PessoaService {
         }),
         take(1)
       );
+  }
+
+  listarEstados(): Observable<Estado[]> {
+    return this.http.get(`${this.estadosUrl}`)
+    .pipe(
+      map((res: any) => {
+        return res;
+      }),
+      take(1)
+    );
+  }
+
+  pesquisarCidades(estado) {
+    const params: any = {};
+
+    params.estado = estado;
+
+    return this.http.get(`${this.cidadesUrl}`, { params })
+    .pipe(
+      map((res: any) => {
+        return res;
+      }),
+      take(1)
+    );
   }
 
   private getHeaders(): HttpHeaders {

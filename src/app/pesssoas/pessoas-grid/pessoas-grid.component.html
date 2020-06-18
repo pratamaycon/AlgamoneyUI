@@ -51,10 +51,10 @@
         </span>
         <ng-template #colunaSemAtivo>
           <span *ngIf="col.field === 'cidade'">
-            {{ pessoa.endereco?.cidade }}
+            {{ pessoa.endereco?.cidade.nome }}
           </span>
           <span *ngIf="col.field === 'estado'">
-            {{ pessoa.endereco?.estado }}
+            {{ pessoa.endereco.cidade?.estado.nome }}
           </span>
           {{ rowData[col.field] }}
         </ng-template>

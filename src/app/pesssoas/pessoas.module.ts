@@ -17,6 +17,7 @@ import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.co
 import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
 import { PessoasRoutingModule } from './pessoas.routes';
 import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [PessoasPesquisaComponent, PessoasCadastroComponent, PessoasGridComponent, PessoaCadastroContatoComponent],
@@ -32,6 +33,7 @@ import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa
     SharedModule,
     PanelModule,
     DialogModule,
+    DropdownModule,
     PessoasRoutingModule
   ],
   exports: []

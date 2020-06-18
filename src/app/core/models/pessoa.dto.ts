@@ -1,3 +1,4 @@
+import { Cidade } from './cidade.dto';
 import { Contato } from './contatos';
 
 export class PessoaDTO {
@@ -20,20 +21,18 @@ export class PessoaDTO {
 export class Endereco {
   bairro: string;
   cep: string;
-  cidade: string;
   complemento: string;
-  estado: string;
   logradouro: string;
   numero: string;
+  cidade = new Cidade();
 
-  constructor(bairro?: string, cep?: string, cidade?: string, complemento?: string,
-              estado?: string, logradouro?: string, numero?: string ) {
+  constructor(bairro?: string, cep?: string, cidade?: Cidade, complemento?: string,
+              logradouro?: string, numero?: string ) {
     this.bairro = bairro;
     this.cep = cep;
-    this.cidade = cidade;
     this.complemento = complemento;
-    this.estado = estado;
     this.logradouro = logradouro;
     this.numero = numero;
+    this.cidade = cidade;
   }
 }

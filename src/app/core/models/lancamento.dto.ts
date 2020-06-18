@@ -11,6 +11,8 @@ export class LancamentoDTO {
   tipo: string;
   valor: number;
   observacao: string;
+  anexo: string;
+  urlAnexo: string;
 
   constructor(tipo?: string, valor?: number, descricao?: string, dataPagamento?: Date,
               dataVencimento?: Date, pessoa?: PessoaDTO, categoria?: CategoriaDTO,

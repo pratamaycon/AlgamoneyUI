@@ -77,27 +77,41 @@
           </p-inputMask>
         </div>
 
-        <div class="ui-g-12 ui-md-6 ui-fluid">
+        <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="cidade">
+          <label>Estado</label>
+
+          <div formGroupName="estado">
+            <p-dropdown placeholder="Selecione... " [filter]="true"
+            [options]="estados" formControlName="codigo"
+            (ngModelChange)="onChangeCode($event)"
+            (onChange)="carregarCidades()"></p-dropdown>
+
+            <app-message
+              [control]="formulario.get('endereco.cidade.estado')"
+              error="required"
+              text="Campo Obrigatório">
+            </app-message>
+          </div>
+
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="cidade">
           <label>Cidade</label>
-          <input pInputText type="text" formControlName="cidade" />
+
+          <p-dropdown placeholder="Selecione... " [filter]="true"
+          [options]="cidades" formControlName="codigo"
+          [disabled]="!estadoSelecionado"
+          ></p-dropdown>
+
           <app-message
             [control]="formulario.get('endereco.cidade')"
             error="required"
-            text="Campo Obrigatório"
-          >
+            text="Campo Obrigatório">
           </app-message>
+
+
         </div>
 
-        <div class="ui-g-12 ui-md-6 ui-fluid">
-          <label>Estado</label>
-          <input pInputText type="text" formControlName="estado" />
-          <app-message
-            [control]="formulario.get('endereco.estado')"
-            error="required"
-            text="Campo Obrigatório"
-          >
-          </app-message>
-        </div>
       </div>
 
       <div class="ui-g-12">

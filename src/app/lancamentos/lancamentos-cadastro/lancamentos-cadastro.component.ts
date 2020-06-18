@@ -1,9 +1,9 @@
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, DoCheck } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { LancamentoService } from './../service/lancamento.service';
+import { LancamentoService } from './../services/lancamento.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/service/error-handler.service';
 import { PessoaService } from 'src/app/pesssoas/services/pessoa.service';
@@ -34,7 +34,9 @@ export class LancamentosCadastroComponent implements OnInit {
       codigo: new FormControl(null, [Validators.required]),
     }),
     tipo: new FormControl('RECEITA', [Validators.required]),
-    observacao: new FormControl(null)
+    observacao: new FormControl(null),
+    anexo: new FormControl(null),
+    urlAnexo: new FormControl(null),
   });
 
   public value: number;
@@ -44,9 +46,9 @@ export class LancamentosCadastroComponent implements OnInit {
   ];
   public categorias: SelectItem[] = [];
   public pessoas: SelectItem[] = [];
-  public selectedType: string;
-
   public lancamento: LancamentoDTO;
+
+  public uploadEmAndamento = false;
 
   constructor(
     private categoriasService: CategoriaService,
@@ -71,6 +73,51 @@ export class LancamentosCadastroComponent implements OnInit {
 
     this.carregarCategorias();
     this.carregarPessoas();
+  }
+
+  onBeforeSend(event) {
+    this.uploadEmAndamento = true;
+  }
+
+  aoTerminarUploadAnexo(evento) {
+    console.log('>>> ' , evento.originalEvent.body);
+    const anexo = evento.originalEvent.body;
+
+    this.formulario.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: anexo.url
+    });
+
+    this.uploadEmAndamento = false;
+  }
+
+  erroUpload(event) {
+    this.toastyService.error('Error ao tentar enviar anexo!')
+
+    this.uploadEmAndamento = false;
+  }
+
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }
+
+  get nomeAnexo() {
+    const nome = this.formulario.get('anexo').value;
+
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+
+    return '';
+  }
+
+  get urlUploadAnexo() {
+    if (!this.uploadEmAndamento) {
+      return this.lancamentoService.urlUploadAnexo();
+    }
   }
 
   carregarLancamentos(codigo: number) {

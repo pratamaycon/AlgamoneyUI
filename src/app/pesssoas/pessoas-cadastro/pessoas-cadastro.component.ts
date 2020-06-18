@@ -23,8 +23,14 @@ export class PessoasCadastroComponent implements OnInit {
       numero: new FormControl(null, [Validators.required]),
       bairro: new FormControl(null, [Validators.required]),
       cep: new FormControl(null, [Validators.required]),
-      cidade: new FormControl(null, [Validators.required]),
-      estado: new FormControl(null, [Validators.required]),
+      cidade: new FormGroup({
+        codigo: new FormControl(null, [Validators.required]),
+        nome: new FormControl(null),
+        estado: new FormGroup({
+          codigo: new FormControl(null, [Validators.required]),
+          nome: new FormControl(null),
+        })
+      }),
       complemento: new FormControl(null),
     }),
     ativo: new FormControl(true),
@@ -38,6 +44,10 @@ export class PessoasCadastroComponent implements OnInit {
 
   public pessoa: PessoaDTO;
 
+  public estados: Array<any> = [];
+  public cidades: Array<any> = [];
+  public estadoSelecionado: number;
+
   constructor(
     private handlerService: ErrorHandlerService,
     private toastyService: ToastyService,
@@ -47,8 +57,6 @@ export class PessoasCadastroComponent implements OnInit {
     private title: Title
   ) {}
 
-
-
   ngOnInit(): void {
     this.title.setTitle('Nova Pessoa');
 
@@ -57,10 +65,16 @@ export class PessoasCadastroComponent implements OnInit {
 
     const codPessoa = this.routes.snapshot.params.codigo;
 
+    this.carregarEstados();
+
     if (codPessoa) {
       this.carregarPessoas(codPessoa);
     }
   }
+
+  onChangeCode(evento) {
+    this.estadoSelecionado = evento;
+ }
 
   salvar() {
     this.formulario.value.contatos = this.pessoa.contatos;
@@ -107,11 +121,37 @@ export class PessoasCadastroComponent implements OnInit {
     this.pessoasService.buscarPorCodigo(codigo).subscribe(
       (pessoa: PessoaDTO) => {
         this.pessoa = pessoa;
+
+        this.estadoSelecionado = this.pessoa.endereco.cidade ?
+            this.pessoa.endereco.cidade.estado.codigo : null;
+
+        if (this.estadoSelecionado) {
+          this.carregarCidades();
+        }
+
         this.formulario.patchValue(pessoa);
         this.atualizarTitulo(pessoa);
       },
       (erro: any) => this.handlerService.handle(erro)
     );
+  }
+
+  carregarEstados() {
+    this.pessoasService.listarEstados()
+      .subscribe( lista => {
+        this.estados = lista.map( uf => ({ label: uf.nome, value: uf.codigo }) );
+      },
+      (erro: any) => this.handlerService.handle(erro)
+      )
+  }
+
+  carregarCidades() {
+    this.pessoasService.pesquisarCidades(this.estadoSelecionado)
+      .subscribe( lista => {
+        this.cidades = lista.map( c => ({ label: c.nome, value: c.codigo }) );
+      },
+      (erro: any) => this.handlerService.handle(erro)
+      )
   }
 
   novo(): void {

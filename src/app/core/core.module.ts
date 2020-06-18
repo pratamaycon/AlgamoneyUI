@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './service/error-handler.service';
-import { LancamentoService } from '../lancamentos/service/lancamento.service';
+import { LancamentoService } from '../lancamentos/services/lancamento.service';
 import { PessoaService } from '../pesssoas/services/pessoa.service';
 import { CategoriaService } from './../categorias/categoria.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
