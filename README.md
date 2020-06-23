@@ -1,4 +1,4 @@
-# SPA Foco em Gastos Pessoais - AlgamoneyUI -
+# SPA Foco no Controle dos Gastos Pessoais - AlgamoneyUI -
 
 ## Requisitos
 
