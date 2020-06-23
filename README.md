@@ -17,10 +17,10 @@
 
 ## Funcionalidades Desenvolvidas Durante o período do curso...
 
-#### Tela de Login
- - Autenticação do usuário com login e senha correspondente na base de dados.
+ #### Tela de Login
+  - Autenticação do usuário com login e senha correspondente na base de dados.
 
-- Tela Dashboard
+ #### Tela Dashboard
   - Exibe dois gráficos que exibem grupos estatisticos distintos
       - ***Gráfico de Pizza***: Exibe as estatisticas dos lançamentos por categoria. Obs: Somente serão exibidos lançamentos que estão válidos.
       - ***Gráfico de Linha***: Exibe as estatisticas dos lançamentos pelo dias. Obs: Somente serão exibidos lançamentos que estão válidos.
