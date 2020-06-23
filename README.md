@@ -26,11 +26,17 @@
       - ***Gráfico de Linha***: Exibe as estatisticas dos lançamentos pelo dias. Obs: Somente serão exibidos lançamentos que estão válidos.
 
 #### Tela de Pessoas
+ - Operações de GRUD na Entidade Pessoa
+ - Cada pessoa pode ter um ou mais contatos...
 
 #### Tela de Lançamentos
+ - Operações de GRUD na Entidade Lançamentos
+ - Permite anexar um pdf junto
 
 #### Tela Relatórios
+ - Geração de relatórios de acordo com intervalos de datas.
 
 #### Logout
+ - Mata o cookie com refresh_token, fazendo com que o usuário perca seu acesso e retorne para tela de login novamente. Precisa se autenticar no sistema de novo.
 
 ## Funcionalidades Desenvolvidas com o objetivo de melhora do projeto...
