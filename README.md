@@ -2,13 +2,13 @@
 
 ## Requisitos
 
-- Angular **VERSION `9 ou Superior`***
+- Angular **VERSION `9 ou Superior`**
 - Ter a API Restful rodando 
     - [Link API](https://github.com/pratamaycon/algamoney-api)
 
 ## Tecnologias Utilizadas
 
-- PrimeNG **VERSION `9 ou Superior`***
+- PrimeNG **VERSION `9 ou Superior`**
 - ng2-currency-mask 
 - moment
 - ng2-toasty
