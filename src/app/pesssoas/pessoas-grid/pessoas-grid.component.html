@@ -8,8 +8,7 @@
   [lazy]="true"
   [totalRecords]="totalRegistros"
   (onLazyLoad)="aoMudarPagina($event)"
-  #tabela
->
+  #tabela>
   <ng-template pTemplate="colgroup" let-columns>
     <colgroup>
       <col *ngFor="let col of columns" [style.width]="col.width" />
